@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Entities;
 using TaskBoard.Domain.Interfaces;
+using TaskBoard.Domain.Models;
 
-namespace TaskBoard.Domain.Repositories;
+namespace TaskBoard.Infrastructure.Repositories;
 
 public class SprintRepository : ISprintRepository
 {
@@ -13,23 +13,23 @@ public class SprintRepository : ISprintRepository
         _context = context;
     }
 
-    public async Task Create(SprintEntity entity)
+    public async Task Create(Sprint entity)
     {
         await _context.Sprints.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
     
-    public async Task<SprintEntity> GetById(Guid id)
+    public async Task<Sprint> GetById(Guid id)
     {
         return await _context.Sprints.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<SprintEntity> GetByTitle(string title)
+    public async Task<Sprint> GetByTitle(string title)
     {
         return await _context.Sprints.FirstOrDefaultAsync(x => x.Title == title);
     }
     
-    public async Task<SprintEntity> Update(SprintEntity entity)
+    public async Task<Sprint> Update(Sprint entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();

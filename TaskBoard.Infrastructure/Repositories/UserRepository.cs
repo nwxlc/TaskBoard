@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Entities;
-using TaskBoard.Domain.Interfaces;
-using TaskBoard.Models;
+using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Domain.Models.Users;
 
-namespace TaskBoard.Domain.Repositories;
+namespace TaskBoard.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
@@ -14,13 +13,13 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task Create(UserEntity userEntity)
+    public async Task Create(User userEntity)
     {
         await _context.AddAsync(userEntity);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<UserEntity?> GetByEmail(string email)
+    public async Task<User?> TryGetByEmail(string email)
     {
         return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
     }

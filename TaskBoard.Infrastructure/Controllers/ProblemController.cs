@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using TaskBoard.Application.Commands;
+using TaskBoard.Application.Interfaces.Service;
 using TaskBoard.Contracts;
-using TaskBoard.Models;
-using TaskBoard.Service.Interfaces;
 
-namespace TaskBoard.Controllers;
+namespace TaskBoard.Infrastructure.Controllers;
 
-public class ProblemController
+public class ProblemController : Controller
 {
     private readonly IProblemService _problemService;
 
@@ -15,17 +15,18 @@ public class ProblemController
     }
 
     [HttpPost]
-    public async Task Create([FromBody] ProblemRequest problemRequest)
+    public async Task<IActionResult>Create([FromBody]ProblemRequest problemRequest)
     {
-        var problem = new Problem
+        var problem = new ProblemCommand
         {
             Id = Guid.NewGuid(),
             Title = problemRequest.Title,
-            Decription = problemRequest.Decription,
+            Description = problemRequest.Decription,
             Comment = problemRequest.Comment,
             Status = false
         };
 
         await _problemService.Create(problem);
+        return Ok("");
     }
 }

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Entities;
 using TaskBoard.Domain.Interfaces;
+using TaskBoard.Domain.Models;
 
-namespace TaskBoard.Domain.Repositories;
+namespace TaskBoard.Infrastructure.Repositories;
 
 public class ProblemRepository : IProblemRepository
 {
@@ -13,23 +13,23 @@ public class ProblemRepository : IProblemRepository
         _context = context;
     }
 
-    public async Task Create(ProblemEntity entity)
+    public async Task Create(Problem entity)
     {
         await _context.Problems.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
     
-    public async Task<ProblemEntity> GetById(Guid id)
+    public async Task<Problem> GetById(Guid id)
     {
         return await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<ProblemEntity> GetByTitle(string title)
+    public async Task<Problem> GetByTitle(string title)
     {
         return await _context.Problems.FirstOrDefaultAsync(x => x.Title == title);
     }
     
-    public async Task<ProblemEntity> Update(ProblemEntity entity)
+    public async Task<Problem> Update(Problem entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();

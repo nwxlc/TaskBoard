@@ -1,7 +1,6 @@
+using TaskBoard.Application.Interfaces.Service;
 
-using TaskBoard.Service.Interfaces;
-
-namespace TaskBoard.Infrastructure;
+namespace TaskBoard.Infrastructure.Authentification;
 
 public class PasswordHasher : IPasswordHasher
 {

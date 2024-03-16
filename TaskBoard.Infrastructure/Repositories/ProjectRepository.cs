@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Entities;
 using TaskBoard.Domain.Interfaces;
+using TaskBoard.Domain.Models;
+using TaskBoard.Infrastructure;
 
 namespace TaskBoard.Domain.Repositories;
 
@@ -13,23 +14,23 @@ public class ProjectRepository : IProjectRepository
         _context = context;
     }
 
-    public async Task Create(ProjectEntity entity)
+    public async Task Create(Project entity)
     {
         await _context.Projects.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
     
-    public async Task<ProjectEntity> GetById(Guid id)
+    public async Task<Project> GetById(Guid id)
     {
         return await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<ProjectEntity> GetByTitle(string title)
+    public async Task<Project> GetByTitle(string title)
     {
         return await _context.Projects.FirstOrDefaultAsync(x => x.Title == title);
     }
     
-    public async Task<ProjectEntity> Update(ProjectEntity entity)
+    public async Task<Project> Update(Project entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();

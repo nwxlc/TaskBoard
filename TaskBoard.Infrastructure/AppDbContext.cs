@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Entities;
+using TaskBoard.Domain.Models;
+using TaskBoard.Domain.Models.Users;
 
-namespace TaskBoard.Domain;
+namespace TaskBoard.Infrastructure;
 
 public class AppDbContext : IdentityDbContext<IdentityUser>
 {
@@ -11,10 +12,10 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
         : base(options)
     { }
     
-    public DbSet<ProjectEntity> Projects { get; set; }
-    public DbSet<SprintEntity> Sprints { get; set; }
-    public DbSet<ProblemEntity> Problems { get; set; }
-    public DbSet<FileEntity> Files { get; set; }
-    public DbSet<UserEntity> Users { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<Sprint> Sprints { get; set; }
+    public DbSet<Problem> Problems { get; set; }
+    //public DbSet<File> Files { get; set; }
+    public DbSet<User> Users { get; set; }
     
 }

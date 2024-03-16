@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TaskBoard;
 using TaskBoard.Domain;
+using TaskBoard.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
