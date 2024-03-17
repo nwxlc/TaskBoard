@@ -19,7 +19,7 @@ public class ProblemService : IProblemService
         ArgumentNullException.ThrowIfNull(problemCommand);
         
         var problem = new Problem (
-            Guid.NewGuid(), 
+            problemCommand.Id, 
             problemCommand.Title, 
             problemCommand.Description, 
             problemCommand.Comment, 
