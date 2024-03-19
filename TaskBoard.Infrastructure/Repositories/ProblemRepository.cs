@@ -13,10 +13,12 @@ public class ProblemRepository : IProblemRepository
         _context = context;
     }
 
-    public async Task Create(Problem entity)
+    public async Task<Guid> Create(Problem entity)
     {
         await _context.Problems.AddAsync(entity);
         await _context.SaveChangesAsync();
+
+        return entity.Id;
     }
     
     public async Task<Problem> GetById(Guid id)
@@ -29,14 +31,15 @@ public class ProblemRepository : IProblemRepository
         return await _context.Problems.FirstOrDefaultAsync(x => x.Title == title);
     }
     
-    public async Task<Problem> Update(Problem entity)
+    public async Task<Guid> Update(Problem entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();
-        return entity;
+
+        return entity.Id;
     }
 
-    public async Task Delete(Guid id)
+    public async Task<Guid> Delete(Guid id)
     {
         var problemToDelete = await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
         if (problemToDelete != null)
@@ -44,5 +47,7 @@ public class ProblemRepository : IProblemRepository
             _context.Problems.Remove(problemToDelete);
             await _context.SaveChangesAsync();
         }
+        
+        
     }
 }

@@ -1,4 +1,5 @@
 using TaskBoard.Application.Commands;
+using TaskBoard.Application.Commands.Project;
 using TaskBoard.Application.Interfaces.Service;
 using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
@@ -14,14 +15,14 @@ public class ProjectService : IProjectService
         _projectRepository = projectRepository;
     }
     
-    public async Task<Guid> Create(ProjectCommand projectCommand)
+    public async Task<Guid> Create(CreateProjectCommand createProjectCommand)
     {
-        ArgumentNullException.ThrowIfNull(projectCommand);
+        ArgumentNullException.ThrowIfNull(createProjectCommand);
         
         var project = new Project(
-            projectCommand.Id, 
-            projectCommand.Title, 
-            projectCommand.Description
+            createProjectCommand.Id, 
+            createProjectCommand.Title, 
+            createProjectCommand.Description
         );
 
         await _projectRepository.Create(project);
@@ -35,6 +36,8 @@ public class ProjectService : IProjectService
 
     public async Task<Project> GetByTitle(string title)
     {
+        ArgumentException.ThrowIfNullOrEmpty(title);
+        
         return await _projectRepository.GetByTitle(title);
     }
     

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Commands;
+using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Application.Interfaces.Service;
 using TaskBoard.Contracts;
 
@@ -14,21 +15,59 @@ public class ProblemController : Controller
         _problemService = problemService;
     }
 
-    [HttpPost]
-    public async Task<IActionResult>Create([FromBody]ProblemRequest problemRequest)
+    [HttpGet]
+    public async Task<ActionResult<ProblemResponse>> Get(string title)
     {
-        var problem = new ProblemCommand
+        ArgumentException.ThrowIfNullOrEmpty(title);
+
+        var problem = await _problemService.GetByTitle(title);
+
+        var response = new ProblemResponse(problem.Id, problem.Title, problem.Description, problem.Comment);
+
+        return Ok(response);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ProblemResponse>> Get(Guid guid)
+    {
+        var problem = await _problemService.GetById(guid);
+
+        var response = new ProblemResponse(problem.Id, problem.Title, problem.Description, problem.Comment);
+
+        return Ok(response);
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult<Guid>> Create([FromBody]ProblemRequest problemRequest)
+    {
+        var problem = new CreateProblemCommand
         {
             Id = Guid.NewGuid(),
             Title = problemRequest.Title,
-            Description = problemRequest.Decription,
+            Description = problemRequest.Description,
             Comment = problemRequest.Comment,
             Status = false
         };
 
-        await _problemService.Create(problem);
-        return Ok("");
+        var problemId = await _problemService.Create(problem);
+        return Ok(problemId);
     }
-    
-    
+
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult<Guid>> Update(Guid id, ProblemRequest problemRequest)
+    {
+        var problemId = await _problemService.Update(id, 
+            problemRequest.Title, 
+            problemRequest.Description, 
+            problemRequest.Comment, 
+            problemRequest.Status);
+
+        return Ok(problemId);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<ActionResult<Guid>> Delete(Guid id)
+    {
+        return Ok(_problemService.Delete(id));
+    }
 }

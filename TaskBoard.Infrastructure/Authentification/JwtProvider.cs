@@ -19,14 +19,14 @@ public class JwtProvider : IJwtProvider
 
     public string GenerateToken(User user)
     {
-        Claim[] claims
+        //Claim[] claims
         
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
             SecurityAlgorithms.HmacSha256);
         
         var token = new JwtSecurityToken(
-            claims: claims,
+            //claims: claims,
             signingCredentials: signingCredentials,
             expires: DateTime.UtcNow.AddHours(_options.ExpireHours));
 

@@ -1,13 +1,14 @@
 using TaskBoard.Application.Commands;
+using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Interfaces.Service;
 
 public interface IProblemService
 {
-    Task<Guid> Create(ProblemCommand problemCommand);
+    Task<Guid> Create(CreateProblemCommand createProblemCommand);
     Task<Problem> GetById(Guid id);
     Task<Problem> GetByTitle(string title); 
-    Task<Problem> Update(Guid id, string title, string description, string comment, bool status);
+    Task<Guid> Update(Guid id, string title, string description, string comment, bool status);
     Task Delete(Guid id);
 }

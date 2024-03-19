@@ -2,7 +2,7 @@ namespace TaskBoard.Application.Service;
 
 public class UserService
 {
-    private readonly IPasswordHasher _passwordHasher;
+    /*private readonly IPasswordHasher _passwordHasher;
     private readonly IUserRepository _userRepository;
     private readonly IJwtProvider _jwtProvider;
     
@@ -36,5 +36,5 @@ public class UserService
         var token = _jwtProvider.GenerateToken(user);
 
         return token;
-    }
+    }*/
 }

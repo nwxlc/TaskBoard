@@ -1,8 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TaskBoard.Models;
 
-namespace TaskBoard.Controllers;
+namespace TaskBoard.Infrastructure.Controllers;
 
 public class HomeController : Controller
 {

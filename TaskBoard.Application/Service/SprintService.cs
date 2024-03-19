@@ -1,4 +1,5 @@
 using TaskBoard.Application.Commands;
+using TaskBoard.Application.Commands.Sprint;
 using TaskBoard.Application.Interfaces.Service;
 using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
@@ -14,16 +15,16 @@ public class SprintService : ISprintService
         _sprintRepository = sprintRepository;
     }
 
-    public async Task<Guid> Create(SprintCommand sprintCommand)
+    public async Task<Guid> Create(CreateSprintCommand createSprintCommand)
     {
-        ArgumentNullException.ThrowIfNull(sprintCommand);
+        ArgumentNullException.ThrowIfNull(createSprintCommand);
         
         var sprint = new Sprint(
-            sprintCommand.Id, 
+            createSprintCommand.Id, 
             DateTime.Now,
-            sprintCommand.Title, 
-            sprintCommand.Description, 
-            sprintCommand.Comment
+            createSprintCommand.Title, 
+            createSprintCommand.Description, 
+            createSprintCommand.Comment
         );
 
         await _sprintRepository.Create(sprint);
