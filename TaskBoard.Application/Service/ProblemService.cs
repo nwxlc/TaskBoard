@@ -1,5 +1,6 @@
 using TaskBoard.Application.Commands;
 using TaskBoard.Application.Commands.Problem;
+using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Interfaces.Service;
 using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
@@ -54,8 +55,8 @@ public class ProblemService : IProblemService
         return await _problemRepository.Update(problemToUpdateEntity);
     }
 
-    public async Task Delete(Guid id)
+    public async Task<Guid> Delete(Guid id)
     {
-        await _problemRepository.Delete(id);
+        return await _problemRepository.Delete(id);
     }
 }

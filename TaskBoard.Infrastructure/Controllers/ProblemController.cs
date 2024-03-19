@@ -68,6 +68,6 @@ public class ProblemController : Controller
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<Guid>> Delete(Guid id)
     {
-        return Ok(_problemService.Delete(id));
+        return Ok(await _problemService.Delete(id));
     }
 }

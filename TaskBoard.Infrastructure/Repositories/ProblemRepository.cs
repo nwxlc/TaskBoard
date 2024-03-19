@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
 
@@ -47,7 +48,7 @@ public class ProblemRepository : IProblemRepository
             _context.Problems.Remove(problemToDelete);
             await _context.SaveChangesAsync();
         }
-        
-        
+
+        return id;
     }
 }

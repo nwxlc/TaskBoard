@@ -10,5 +10,5 @@ public interface IProblemService
     Task<Problem> GetById(Guid id);
     Task<Problem> GetByTitle(string title); 
     Task<Guid> Update(Guid id, string title, string description, string comment, bool status);
-    Task Delete(Guid id);
+    Task<Guid> Delete(Guid id);
 }
