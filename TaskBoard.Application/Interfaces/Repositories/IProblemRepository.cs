@@ -8,5 +8,5 @@ public interface IProblemRepository
     Task<Problem> GetById(Guid id);
     Task<Problem> GetByTitle(string title);
     Task<Guid> Update(Problem entity);
-    Task<Guid> Delete(Guid id);
+    Task Delete(Guid id);
 }	

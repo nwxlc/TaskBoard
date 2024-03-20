@@ -1,8 +1,6 @@
-using TaskBoard.Application.Commands;
 using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Interfaces.Service;
-using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Service;
@@ -44,8 +42,7 @@ public class ProblemService : IProblemService
     
     public async Task<Guid> Update(Guid id, string title, string description, string comment, bool status)
     {
-        var problemToUpdateEntity = await _problemRepository.GetById(id) 
-                                    ?? throw new Exception();
+        var problemToUpdateEntity = await _problemRepository.GetById(id);
 
         problemToUpdateEntity.Title = title;
         problemToUpdateEntity.Description = description;
@@ -55,8 +52,8 @@ public class ProblemService : IProblemService
         return await _problemRepository.Update(problemToUpdateEntity);
     }
 
-    public async Task<Guid> Delete(Guid id)
+    public async Task Delete(Guid id)
     {
-        return await _problemRepository.Delete(id);
+        await _problemRepository.Delete(id);
     }
 }

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using TaskBoard.Application.Commands;
 using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Application.Interfaces.Service;
 using TaskBoard.Contracts;
@@ -66,8 +65,10 @@ public class ProblemController : Controller
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<ActionResult<Guid>> Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        return Ok(await _problemService.Delete(id));
+        await _problemService.Delete(id);
+        
+        return NoContent();
     }
 }

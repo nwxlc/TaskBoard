@@ -21,26 +21,30 @@ public class ProblemRepository : IProblemRepository
 
         return entity.Id;
     }
-    
+
     public async Task<Problem> GetById(Guid id)
     {
-        return await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Problems
+                   .FirstOrDefaultAsync(x => x.Id == id)
+               ?? throw new ArgumentException("Problem not found");
     }
 
     public async Task<Problem> GetByTitle(string title)
     {
-        return await _context.Problems.FirstOrDefaultAsync(x => x.Title == title);
+        return await _context.Problems
+                   .FirstOrDefaultAsync(x => x.Title == title)
+               ?? throw new ArgumentException("Problem not found");
+        ;
     }
-    
+
     public async Task<Guid> Update(Problem entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();
 
         return entity.Id;
     }
 
-    public async Task<Guid> Delete(Guid id)
+    public async Task Delete(Guid id)
     {
         var problemToDelete = await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
         if (problemToDelete != null)
@@ -48,7 +52,5 @@ public class ProblemRepository : IProblemRepository
             _context.Problems.Remove(problemToDelete);
             await _context.SaveChangesAsync();
         }
-
-        return id;
     }
 }

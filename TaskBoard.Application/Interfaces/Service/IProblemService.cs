@@ -1,4 +1,3 @@
-using TaskBoard.Application.Commands;
 using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Domain.Models;
 
@@ -10,5 +9,5 @@ public interface IProblemService
     Task<Problem> GetById(Guid id);
     Task<Problem> GetByTitle(string title); 
     Task<Guid> Update(Guid id, string title, string description, string comment, bool status);
-    Task<Guid> Delete(Guid id);
+    Task Delete(Guid id);
 }
