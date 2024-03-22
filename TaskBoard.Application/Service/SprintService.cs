@@ -1,6 +1,6 @@
 using TaskBoard.Application.Commands;
-using TaskBoard.Application.Commands.Sprint;
 using TaskBoard.Application.Interfaces.Service;
+using TaskBoard.Application.Sprints.Commands;
 using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
 

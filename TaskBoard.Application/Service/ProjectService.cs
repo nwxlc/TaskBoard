@@ -1,6 +1,5 @@
-using TaskBoard.Application.Commands;
-using TaskBoard.Application.Commands.Project;
 using TaskBoard.Application.Interfaces.Service;
+using TaskBoard.Application.Projects.Commands;
 using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
 

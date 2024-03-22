@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Application.Interfaces.Service;
+using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Contracts;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -41,15 +41,13 @@ public class ProblemController : Controller
     {
         var problem = new CreateProblemCommand
         {
-            Id = Guid.NewGuid(),
             Title = problemRequest.Title,
             Description = problemRequest.Description,
             Comment = problemRequest.Comment,
-            Status = false
         };
 
         var problemId = await _problemService.Create(problem);
-        return Ok(problemId);
+        return Ok(new { Id = problemId });
     }
 
     [HttpPut("{id:guid}")]

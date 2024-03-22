@@ -1,4 +1,4 @@
-namespace TaskBoard.Application.Commands.Project;
+namespace TaskBoard.Application.Projects.Commands;
 
 public class CreateProjectCommand
 {

@@ -22,6 +22,13 @@ public class ProblemRepository : IProblemRepository
         return entity.Id;
     }
 
+    public async Task<List<Problem>> GetByTitle(string title)
+    {
+        var problemsEntities = await _context.Problems.ToList();
+
+        return problemsEntities;
+    }
+    
     public async Task<Problem> GetById(Guid id)
     {
         return await _context.Problems
@@ -34,11 +41,12 @@ public class ProblemRepository : IProblemRepository
         return await _context.Problems
                    .FirstOrDefaultAsync(x => x.Title == title)
                ?? throw new ArgumentException("Problem not found");
-        ;
+        
     }
 
     public async Task<Guid> Update(Problem entity)
     {
+        _context.Update(entity);
         await _context.SaveChangesAsync();
 
         return entity.Id;
@@ -46,11 +54,20 @@ public class ProblemRepository : IProblemRepository
 
     public async Task Delete(Guid id)
     {
-        var problemToDelete = await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
+        var countDeletedRows = await _context.Problems.Where(x => x.Id == id).ExecuteDeleteAsync();
+        if (countDeletedRows == 0)
+        {
+            throw new ArgumentException("Problem not found");
+        }
+        
+        /*var problemToDelete = await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
         if (problemToDelete != null)
         {
             _context.Problems.Remove(problemToDelete);
             await _context.SaveChangesAsync();
-        }
+        }*/
+        
+        //упасть если нет объекта
+        //ExecuteDeleteAsync
     }
 }

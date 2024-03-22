@@ -1,4 +1,4 @@
-using TaskBoard.Application.Commands.Problem;
+using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Interfaces.Service;

@@ -1,6 +1,6 @@
-namespace TaskBoard.Application.Commands.Problem;
+namespace TaskBoard.Application.Problems.Commands;
 
-public class CreateProblemCommand
+public class UpdateProblemCommand
 {
     public Guid Id { get; set; }
     public string Title { get; set; }

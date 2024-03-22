@@ -1,6 +1,6 @@
-using TaskBoard.Application.Commands.Problem;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Interfaces.Service;
+using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Service;
@@ -17,15 +17,11 @@ public class ProblemService : IProblemService
     public async Task<Guid> Create(CreateProblemCommand createProblemCommand)
     {
         ArgumentNullException.ThrowIfNull(createProblemCommand);
-        
-        var problem = new Problem(
-            createProblemCommand.Id, 
-            createProblemCommand.Title, 
-            createProblemCommand.Description, 
-            createProblemCommand.Comment, 
-            createProblemCommand.Status 
-        );
 
+        var problem = Problem.Create(createProblemCommand.Title, 
+            createProblemCommand.Description,
+            createProblemCommand.Comment);
+        
         await _problemRepository.Create(problem);
         return problem.Id;
     }
@@ -43,11 +39,10 @@ public class ProblemService : IProblemService
     public async Task<Guid> Update(Guid id, string title, string description, string comment, bool status)
     {
         var problemToUpdateEntity = await _problemRepository.GetById(id);
-
-        problemToUpdateEntity.Title = title;
-        problemToUpdateEntity.Description = description;
-        problemToUpdateEntity.Comment = comment;
-        problemToUpdateEntity.Status = status;
+         
+        problemToUpdateEntity.SetTitle(title);
+        problemToUpdateEntity.SetDescription(description);
+        problemToUpdateEntity.SetComment(comment);
         
         return await _problemRepository.Update(problemToUpdateEntity);
     }
