@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Interfaces;
+using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Infrastructure.Repositories;
@@ -13,36 +13,50 @@ public class SprintRepository : ISprintRepository
         _context = context;
     }
 
-    public async Task Create(Sprint entity)
+    public async Task<Guid> Create(Sprint entity)
     {
         await _context.Sprints.AddAsync(entity);
         await _context.SaveChangesAsync();
+
+        return entity.Id;
     }
     
     public async Task<Sprint> GetById(Guid id)
     {
-        return await _context.Sprints.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Sprints
+                .FirstOrDefaultAsync(x => x.Id == id)
+            ?? throw new ArgumentException("Sprint not found");
     }
 
-    public async Task<Sprint> GetByTitle(string title)
+    public async Task<Sprint[]> SearchByTitle(string? title, int page, int pageSize)
     {
-        return await _context.Sprints.FirstOrDefaultAsync(x => x.Title == title);
+        var sprints = _context.Sprints.AsQueryable();
+        if (title != null)
+        {
+            sprints = sprints
+                .Where(x => EF.Functions.ILike(x.Title, $"%{title}%"));
+        }
+        
+        return await sprints.OrderBy(x => x.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToArrayAsync();
     }
     
-    public async Task<Sprint> Update(Sprint entity)
+    public async Task<Guid> Update(Sprint entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
+        _context.Update(entity);
         await _context.SaveChangesAsync();
-        return entity;
+        
+        return entity.Id;
     }
 
     public async Task Delete(Guid id)
     {
-        var sprintToDelete = await _context.Sprints.FirstOrDefaultAsync(x => x.Id == id);
-        if (sprintToDelete != null)
+        var countDeletedRows = await _context.Sprints.Where(x => x.Id == id).ExecuteDeleteAsync();
+        if (countDeletedRows == 0)
         {
-            _context.Sprints.Remove(sprintToDelete);
-            await _context.SaveChangesAsync();
+            throw new ArgumentException("Sprint not found");
         }
     }
 }

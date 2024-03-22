@@ -13,18 +13,22 @@ public class ProjectRepository : IProjectRepository
         _context = context;
     }
 
-    public async Task Create(Project entity)
+    public async Task<Guid> Create(Project entity)
     {
         await _context.Projects.AddAsync(entity);
         await _context.SaveChangesAsync();
+
+        return entity.Id;
     }
     
     public async Task<Project> GetById(Guid id)
     {
-        return await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.Projects
+            .FirstOrDefaultAsync(x => x.Id == id)
+            ?? throw new ArgumentException("Project not found");
     }
 
-    public async Task<Project[]> GetByTitle(string? title, int page, int pageSize)
+    public async Task<Project[]> SearchByTitle(string? title, int page, int pageSize)
     {
         var projects = _context.Projects.AsQueryable();
         if (title != null)
@@ -39,20 +43,20 @@ public class ProjectRepository : IProjectRepository
             .ToArrayAsync();
     }
     
-    public async Task<Project> Update(Project entity)
+    public async Task<Guid> Update(Project entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
+        _context.Update(entity);
         await _context.SaveChangesAsync();
-        return entity;
+        
+        return entity.Id;
     }
 
     public async Task Delete(Guid id)
     {
-        var projectToDelete = await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
-        if (projectToDelete != null)
+        var countDeletedRows = await _context.Projects.Where(x => x.Id == id).ExecuteDeleteAsync();
+        if (countDeletedRows == 0)
         {
-            _context.Projects.Remove(projectToDelete);
-            await _context.SaveChangesAsync();
+            throw new ArgumentException("Project not found");
         }
     }
 }

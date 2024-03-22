@@ -1,6 +1,5 @@
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Projects.Commands;
-using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Projects.Handlers;
 
@@ -13,7 +12,7 @@ public class UpdateProjectHandler
         _projectRepository = projectRepository;
     }
     
-    public async Task<Project> Update(UpdateProjectCommand updateProjectCommand)
+    public async Task<Guid> Update(UpdateProjectCommand updateProjectCommand)
     {
         var projectToUpdateEntity = await _projectRepository.GetById(updateProjectCommand.Id) 
                                     ?? throw new Exception();
