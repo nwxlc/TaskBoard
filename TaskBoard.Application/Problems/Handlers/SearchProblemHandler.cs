@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Domain.Models;
 

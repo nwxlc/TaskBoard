@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using TaskBoard.Application.Interfaces.Repositories;
-using TaskBoard.Domain.Interfaces;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Infrastructure.Repositories;

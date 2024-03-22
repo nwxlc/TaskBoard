@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using TaskBoard.Domain.Interfaces;
+using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Domain.Models;
-using TaskBoard.Infrastructure;
 
-namespace TaskBoard.Domain.Repositories;
+namespace TaskBoard.Infrastructure.Repositories;
 
 public class ProjectRepository : IProjectRepository
 {
@@ -25,9 +24,19 @@ public class ProjectRepository : IProjectRepository
         return await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<Project> GetByTitle(string title)
+    public async Task<Project[]> GetByTitle(string? title, int page, int pageSize)
     {
-        return await _context.Projects.FirstOrDefaultAsync(x => x.Title == title);
+        var projects = _context.Projects.AsQueryable();
+        if (title != null)
+        {
+            projects = projects
+                .Where(x => EF.Functions.ILike(x.Title, $"%{title}%"));
+        }
+        
+        return await projects.OrderBy(x => x.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToArrayAsync();
     }
     
     public async Task<Project> Update(Project entity)
