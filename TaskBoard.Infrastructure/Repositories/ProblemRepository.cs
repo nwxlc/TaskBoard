@@ -22,11 +22,19 @@ public class ProblemRepository : IProblemRepository
         return entity.Id;
     }
 
-    public async Task<List<Problem>> GetByTitle(string title)
+    public async Task<Problem[]> SearchByTitle(string? title, int page, int pageSize)
     {
-        var problemsEntities = await _context.Problems.ToList();
-
-        return problemsEntities;
+        var problems = _context.Problems.AsQueryable();
+        if (title != null)
+        {
+            problems = problems
+                .Where(x => EF.Functions.ILike(x.Title, $"%{title}%"));
+        }
+        
+        return await problems.OrderBy(x => x.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToArrayAsync();
     }
     
     public async Task<Problem> GetById(Guid id)
@@ -35,15 +43,7 @@ public class ProblemRepository : IProblemRepository
                    .FirstOrDefaultAsync(x => x.Id == id)
                ?? throw new ArgumentException("Problem not found");
     }
-
-    public async Task<Problem> GetByTitle(string title)
-    {
-        return await _context.Problems
-                   .FirstOrDefaultAsync(x => x.Title == title)
-               ?? throw new ArgumentException("Problem not found");
-        
-    }
-
+    
     public async Task<Guid> Update(Problem entity)
     {
         _context.Update(entity);

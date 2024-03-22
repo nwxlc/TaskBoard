@@ -1,4 +1,5 @@
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Problems.Commands;
 
 namespace TaskBoard.Application.Problems.Handlers;
 
@@ -11,13 +12,13 @@ public class UpdateProblemHandler
         _problemRepository = problemRepository;
     }
 
-    public async Task<Guid> Update(Guid id, string title, string description, string comment)
+    public async Task<Guid> Update(UpdateProblemCommand updateProblemCommand)
     {
-        var problemToUpdateEntity = await _problemRepository.GetById(id);
+        var problemToUpdateEntity = await _problemRepository.GetById(updateProblemCommand.Id);
         
-        problemToUpdateEntity.SetTitle(title);
-        problemToUpdateEntity.SetDescription(description);
-        problemToUpdateEntity.SetComment(comment);
+        problemToUpdateEntity.SetTitle(updateProblemCommand.Title);
+        problemToUpdateEntity.SetDescription(updateProblemCommand.Description);
+        problemToUpdateEntity.SetComment(updateProblemCommand.Comment);
         
         return await _problemRepository.Update(problemToUpdateEntity);
     }
