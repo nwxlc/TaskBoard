@@ -1,4 +1,4 @@
-namespace TaskBoard.Contracts;
+namespace TaskBoard.Infrastructure.Contracts.Problem;
 
 public record ProblemResponse(
     Guid Id,

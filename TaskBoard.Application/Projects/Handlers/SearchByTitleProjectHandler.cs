@@ -3,11 +3,11 @@ using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Projects.Handlers;
 
-public class SearchProjectHandler
+public class SearchByTitleProjectHandler
 {
     private readonly IProjectRepository _projectRepository;
 
-    public SearchProjectHandler(IProjectRepository projectRepository)
+    public SearchByTitleProjectHandler(IProjectRepository projectRepository)
     {
         _projectRepository = projectRepository;
     }

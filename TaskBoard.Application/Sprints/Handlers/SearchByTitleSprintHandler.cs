@@ -3,11 +3,11 @@ using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Sprints.Handlers;
 
-public class SearchSprintHandler
+public class SearchByTitleSprintHandler
 {
     private readonly ISprintRepository _sprintRepository;
 
-    public SearchSprintHandler(ISprintRepository sprintRepository)
+    public SearchByTitleSprintHandler(ISprintRepository sprintRepository)
     {
         _sprintRepository = sprintRepository;
     }

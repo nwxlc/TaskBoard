@@ -30,7 +30,7 @@ public class Problem
 
     public string Description { get; private set; }
     
-    public string? Comment { get; private set; }
+    public string Comment { get; private set; }
     
     public bool IsComplete { get; set; }
     
