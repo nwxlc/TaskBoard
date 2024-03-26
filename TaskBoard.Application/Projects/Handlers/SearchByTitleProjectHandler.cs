@@ -1,4 +1,5 @@
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Projects.Queries;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Projects.Handlers;
@@ -12,8 +13,8 @@ public class SearchByTitleProjectHandler
         _projectRepository = projectRepository;
     }
 
-    public async Task<Project[]> SearchByTitle(string? title, int page, int pageSize)
+    public async Task<Project[]> SearchByTitle(SearchSprintByTitleQuery query)
     {
-        return await _projectRepository.SearchByTitle(title, page, pageSize);
+        return await _projectRepository.SearchByTitle(query.Title, query.Page, query.PageSize);
     }
 }

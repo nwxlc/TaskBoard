@@ -1,4 +1,5 @@
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Projects.Queries;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Sprints.Handlers;
@@ -12,8 +13,8 @@ public class SearchByTitleSprintHandler
         _sprintRepository = sprintRepository;
     }
 
-    public async Task<Sprint[]> SearchByTitle(string? title, int page, int pageSize)
+    public async Task<Sprint[]> SearchByTitle(SearchSprintByTitleQuery query)
     {
-        return await _sprintRepository.SearchByTitle(title, page, pageSize);
+        return await _sprintRepository.SearchByTitle(query.Title, query.Page, query.PageSize);
     }
 }

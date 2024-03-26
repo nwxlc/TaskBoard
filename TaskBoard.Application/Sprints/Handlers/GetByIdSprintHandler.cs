@@ -1,4 +1,5 @@
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Sprints.Queries;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Sprints.Handlers;
@@ -12,8 +13,8 @@ public class GetByIdSprintHandler
         _sprintRepository = sprintRepository;
     }
 
-    public async Task<Sprint> GetById(Guid id)
+    public async Task<Sprint> GetById(GetSprintByIdQuery query)
     {
-        return await _sprintRepository.GetById(id);
+        return await _sprintRepository.GetById(query.Id);
     }
 }
