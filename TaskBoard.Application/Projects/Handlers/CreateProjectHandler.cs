@@ -1,10 +1,11 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Projects.Commands;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Projects.Handlers;
 
-public class CreateProjectHandler
+public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, Guid>
 {
     private readonly IProjectRepository _projectRepository;
 
@@ -13,7 +14,7 @@ public class CreateProjectHandler
         _projectRepository = projectRepository;
     }
 
-    public async Task<Guid> Create(CreateProjectCommand createProjectCommand)
+    public async Task<Guid> Handle(CreateProjectCommand createProjectCommand, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(createProjectCommand);
 

@@ -1,10 +1,12 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Projects.Queries;
+using TaskBoard.Application.Sprints.Queries;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Sprints.Handlers;
 
-public class SearchByTitleSprintHandler
+public class SearchByTitleSprintHandler : IRequestHandler<SearchSprintByTitleQuery, Sprint[]>
 {
     private readonly ISprintRepository _sprintRepository;
 
@@ -13,7 +15,7 @@ public class SearchByTitleSprintHandler
         _sprintRepository = sprintRepository;
     }
 
-    public async Task<Sprint[]> SearchByTitle(SearchSprintByTitleQuery query)
+    public async Task<Sprint[]> Handle(SearchSprintByTitleQuery query, CancellationToken cancellationToken)
     {
         return await _sprintRepository.SearchByTitle(query.Title, query.Page, query.PageSize);
     }

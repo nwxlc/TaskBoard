@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Commands.Users;
 using TaskBoard.Application.Service;
 using TaskBoard.Infrastructure.Contracts;
+using TaskBoard.Infrastructure.Contracts.User;
 
 namespace TaskBoard.Infrastructure.Controllers;
 

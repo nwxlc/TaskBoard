@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using TaskBoard;
-using TaskBoard.Domain;
 using TaskBoard.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
 builder.Configuration.Bind("Project", new Config());
 Console.WriteLine(Config.ConnectionString);
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Config.ConnectionString));

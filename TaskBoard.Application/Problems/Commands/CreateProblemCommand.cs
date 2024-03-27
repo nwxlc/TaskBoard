@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace TaskBoard.Application.Problems.Commands;
 
-public class CreateProblemCommand
+public class CreateProblemCommand : IRequest<Guid>
 {
     public string Title { get; set; }
     public string Description { get; set; }

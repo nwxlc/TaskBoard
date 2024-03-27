@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace TaskBoard.Application.Sprints.Commands;
 
-public class UpdateSprintCommand
+public class UpdateSprintCommand : IRequest<Guid>
 {
     public Guid Id { get; set; }
     public string Title { get; set; }

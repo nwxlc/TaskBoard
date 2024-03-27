@@ -1,10 +1,11 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Sprints.Commands;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Sprints.Handlers;
 
-public class CreateSprintHandler
+public class CreateSprintHandler : IRequestHandler<CreateSprintCommand, Guid>
 {
     private readonly ISprintRepository _sprintRepository;
 
@@ -13,7 +14,7 @@ public class CreateSprintHandler
         _sprintRepository = sprintRepository;
     }
     
-    public async Task<Guid> Create(CreateSprintCommand createSprintCommand)
+    public async Task<Guid> Handle(CreateSprintCommand createSprintCommand, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(createSprintCommand);
 

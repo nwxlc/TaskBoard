@@ -1,9 +1,10 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Sprints.Commands;
 
 namespace TaskBoard.Application.Sprints.Handlers;
 
-public class UpdateSprintHandler
+public class UpdateSprintHandler : IRequestHandler<UpdateSprintCommand, Guid>
 {
     private readonly ISprintRepository _sprintRepository;
 
@@ -11,8 +12,8 @@ public class UpdateSprintHandler
     {
         _sprintRepository = sprintRepository;
     }
-    
-    public async Task<Guid> Update(UpdateSprintCommand updateSprintCommand)
+
+    public async Task<Guid> Handle(UpdateSprintCommand updateSprintCommand, CancellationToken cancellationToken)
     {
         var sprintToUpdateEntity = await _sprintRepository.GetById(updateSprintCommand.Id) 
                                     ?? throw new Exception();

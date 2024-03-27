@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace TaskBoard.Application.Projects.Commands;
 
-public class UpdateProjectCommand
+public class UpdateProjectCommand : IRequest<Guid>
 {
     public Guid Id { get; set; }
     public string Title { get; set; }

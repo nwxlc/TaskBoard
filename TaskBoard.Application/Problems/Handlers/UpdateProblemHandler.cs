@@ -1,9 +1,10 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Problems.Commands;
 
 namespace TaskBoard.Application.Problems.Handlers;
 
-public class UpdateProblemHandler
+public class UpdateProblemHandler : IRequestHandler<UpdateProblemCommand, Guid>
 {
     private readonly IProblemRepository _problemRepository;
 
@@ -12,7 +13,7 @@ public class UpdateProblemHandler
         _problemRepository = problemRepository;
     }
 
-    public async Task<Guid> Update(UpdateProblemCommand updateProblemCommand)
+    public async Task<Guid> Handle(UpdateProblemCommand updateProblemCommand, CancellationToken cancellationToken)
     {
         var problemToUpdateEntity = await _problemRepository.GetById(updateProblemCommand.Id);
         

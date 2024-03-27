@@ -1,6 +1,8 @@
+using MediatR;
+
 namespace TaskBoard.Application.Sprints.Commands;
 
-public class CreateSprintCommand
+public class CreateSprintCommand : IRequest<Guid>
 {
     public string Title { get; set; }
     public string Description { get; set; }

@@ -1,8 +1,10 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Sprints.Commands;
 
 namespace TaskBoard.Application.Sprints.Handlers;
 
-public class DeleteSprintHandler
+public class DeleteSprintHandler : IRequestHandler<DeleteSprintCommand>
 {
     private readonly ISprintRepository _sprintRepository;
 
@@ -10,9 +12,10 @@ public class DeleteSprintHandler
     {
         _sprintRepository = sprintRepository;
     }
-    
-    public async Task Delete(Guid id)
+
+    public async Task Handle(DeleteSprintCommand deleteSprintCommand, CancellationToken cancellationToken)
     {
-        await _sprintRepository.Delete(id);
+        await _sprintRepository.Delete(deleteSprintCommand.Id);
     }
+    
 }

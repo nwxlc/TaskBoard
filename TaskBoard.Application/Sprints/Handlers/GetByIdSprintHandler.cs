@@ -1,10 +1,11 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Sprints.Queries;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Sprints.Handlers;
 
-public class GetByIdSprintHandler
+public class GetByIdSprintHandler : IRequestHandler<GetSprintByIdQuery, Sprint>
 {
     private readonly ISprintRepository _sprintRepository;
 
@@ -13,7 +14,7 @@ public class GetByIdSprintHandler
         _sprintRepository = sprintRepository;
     }
 
-    public async Task<Sprint> GetById(GetSprintByIdQuery query)
+    public async Task<Sprint> Handle(GetSprintByIdQuery query, CancellationToken cancellationToken)
     {
         return await _sprintRepository.GetById(query.Id);
     }

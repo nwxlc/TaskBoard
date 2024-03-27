@@ -1,4 +1,4 @@
-namespace TaskBoard.Infrastructure.Contracts;
+namespace TaskBoard.Infrastructure.Contracts.User;
 
 public record RegisterUserRequest(
     string Email,

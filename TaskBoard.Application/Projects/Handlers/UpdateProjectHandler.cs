@@ -1,9 +1,10 @@
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Projects.Commands;
 
 namespace TaskBoard.Application.Projects.Handlers;
 
-public class UpdateProjectHandler
+public class UpdateProjectHandler : IRequestHandler<UpdateProjectCommand, Guid>
 {
     private readonly IProjectRepository _projectRepository;
 
@@ -12,7 +13,7 @@ public class UpdateProjectHandler
         _projectRepository = projectRepository;
     }
     
-    public async Task<Guid> Update(UpdateProjectCommand updateProjectCommand)
+    public async Task<Guid> Handle(UpdateProjectCommand updateProjectCommand, CancellationToken cancellationToken)
     {
         var projectToUpdateEntity = await _projectRepository.GetById(updateProjectCommand.Id) 
                                     ?? throw new Exception();
