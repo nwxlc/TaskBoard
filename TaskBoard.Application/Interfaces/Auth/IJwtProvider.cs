@@ -1,6 +1,6 @@
 using TaskBoard.Domain.Models.Users;
 
-namespace TaskBoard.Infrastructure.Service.Interfaces;
+namespace TaskBoard.Application.Interfaces.Auth;
 
 public interface IJwtProvider
 {

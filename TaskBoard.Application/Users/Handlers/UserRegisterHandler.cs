@@ -1,10 +1,11 @@
-using TaskBoard.Application.Commands.Users;
+using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Users.Commands;
 using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Application.Users.Handlers;
 
-public class UserRegisterHandler
+public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
 {
     private readonly IUserRepository _userRepository;
 
@@ -13,10 +14,8 @@ public class UserRegisterHandler
         _userRepository = userRepository;
     }
 
-    public async Task<string> Register(UserRegisterCommand userRegisterCommand)
+    public async Task<string> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
     {
-        //var hashedPassword = _passwordHasher.Generate(password);
-
         ArgumentNullException.ThrowIfNull(userRegisterCommand);
         
         var checkEmailUser = _userRepository.TryGetByEmail(userRegisterCommand.Email);

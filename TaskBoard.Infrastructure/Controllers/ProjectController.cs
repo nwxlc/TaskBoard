@@ -27,9 +27,9 @@ public class ProjectController : Controller
             PageSize = pageSize
         };
 
-        var problems = await _mediator.Send(searchProject);
+        var projects = await _mediator.Send(searchProject);
 
-        var response = problems
+        var response = projects
             .Select(project => new ProjectResponse(project.Id, project.Title, project.Description))
             .ToArray();
 

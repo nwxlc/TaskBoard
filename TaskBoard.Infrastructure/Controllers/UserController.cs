@@ -1,20 +1,21 @@
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TaskBoard.Application.Commands.Users;
-using TaskBoard.Application.Service;
-using TaskBoard.Infrastructure.Contracts;
+using TaskBoard.Application.Users.Commands;
 using TaskBoard.Infrastructure.Contracts.User;
 
 namespace TaskBoard.Infrastructure.Controllers;
 
+[ApiController]
 public class UserController : Controller
 {
-    private readonly RegisterService _registerService;
+    private readonly IMediator _mediator;
 
-    public UserController(RegisterService registerService)
+    public UserController(IMediator mediator)
     {
-        _registerService = registerService;
+        _mediator = mediator;
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> Register(RegisterUserRequest userRequest)
     {
@@ -25,7 +26,23 @@ public class UserController : Controller
             Password = userRequest.Password
         };
 
-        var okString = await _registerService.Register(command);
+        var okString = await _mediator.Send(command);
         return Ok("");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Login(LoginUserRequest userRequest, HttpContext context)
+    {
+        var command = new UserLoginCommand()
+        {
+            Email = userRequest.Email,
+            Password = userRequest.Password
+        };
+
+        var token = await _mediator.Send(command);
+        
+        context.Response.Cookies.Append("cookieshahaha", token);
+
+        return Ok(token);
     }
 }

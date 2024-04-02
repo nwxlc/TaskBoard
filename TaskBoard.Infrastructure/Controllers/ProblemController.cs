@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Application.Problems.Queries;
@@ -10,7 +11,7 @@ namespace TaskBoard.Infrastructure.Controllers;
 public class ProblemController : Controller
 {
     private readonly IMediator _mediator;
-
+    
     public ProblemController(IMediator mediator)
     {
         _mediator = mediator;

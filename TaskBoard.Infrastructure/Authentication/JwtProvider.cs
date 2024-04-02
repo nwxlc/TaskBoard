@@ -3,8 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Domain.Models.Users;
-using TaskBoard.Infrastructure.Service.Interfaces;
 
 namespace TaskBoard.Infrastructure.Authentification;
 
@@ -19,14 +19,14 @@ public class JwtProvider : IJwtProvider
 
     public string GenerateToken(User user)
     {
-        //Claim[] claims
+        Claim[] claims = new[] { new Claim("userId", user.Id.ToString()) };
         
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
             SecurityAlgorithms.HmacSha256);
         
         var token = new JwtSecurityToken(
-            //claims: claims,
+            claims: claims,
             signingCredentials: signingCredentials,
             expires: DateTime.UtcNow.AddHours(_options.ExpireHours));
 
