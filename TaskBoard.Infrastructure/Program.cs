@@ -3,7 +3,7 @@ using TaskBoard;
 using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Infrastructure;
-using TaskBoard.Infrastructure.Authentification;
+using TaskBoard.Infrastructure.Authentication;
 using TaskBoard.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,8 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TaskBoard.Infrastructure.Authentification;
+using TaskBoard.Infrastructure.Authentication;
 
 namespace TaskBoard.Infrastructure.Extensions;
 

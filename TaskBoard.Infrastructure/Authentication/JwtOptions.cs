@@ -1,4 +1,4 @@
-namespace TaskBoard.Infrastructure.Authentification;
+namespace TaskBoard.Infrastructure.Authentication;
 
 public class JwtOptions
 {

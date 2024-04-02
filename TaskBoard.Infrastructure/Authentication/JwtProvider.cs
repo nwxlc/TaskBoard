@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Domain.Models.Users;
 
-namespace TaskBoard.Infrastructure.Authentification;
+namespace TaskBoard.Infrastructure.Authentication;
 
 public class JwtProvider : IJwtProvider
 {

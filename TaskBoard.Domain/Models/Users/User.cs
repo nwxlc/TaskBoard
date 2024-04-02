@@ -10,6 +10,8 @@ public class User : IdentityUser
         Email = email;
         PasswordHash = Generate(password);
     }
+    
+    public ICollection<Role> Roles { get; set; }
 
     private string Generate(string password) =>
         BCrypt.Net.BCrypt.EnhancedHashPassword(password);
