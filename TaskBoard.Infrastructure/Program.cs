@@ -13,7 +13,7 @@ var configuration = builder.Configuration;
 services.AddControllers();
 
 services.AddSwaggerGen();
-
+services.AddEndpointsApiExplorer();
 services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
