@@ -1,6 +1,5 @@
 using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
-using TaskBoard.Application.Problems.Handlers;
 using TaskBoard.Application.Projects.Commands;
 
 namespace TaskBoard.Application.Projects.Handlers;

@@ -5,8 +5,8 @@ public class Project
     private Project(Guid id, string title, string description)
     {
         Id = id;
-        Title = title;
-        Description = description;
+        SetTitle(title);
+        SetDescription(description);
     }
 
     public Guid Id { get; set; }

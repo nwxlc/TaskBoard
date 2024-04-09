@@ -5,7 +5,7 @@ using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Application.Users.Handlers;
 
-public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
+public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, Guid>
 {
     private readonly IUserRepository _userRepository;
 
@@ -14,18 +14,18 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
         _userRepository = userRepository;
     }
 
-    public async Task<string> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(userRegisterCommand);
         
-        var checkEmailUser = _userRepository.TryGetByEmail(userRegisterCommand.Email);
+        var checkEmailUser = await _userRepository.TryGetByEmail(userRegisterCommand.Email);
 
-        if (checkEmailUser != null)
+        if (checkEmailUser != null) 
         {
-            throw new Exception("email занят");
+             throw new Exception("email занят");
         }
 
-        var registerUser = new User(
+        var registerUser = User.Create(
             userRegisterCommand.UserName, 
             userRegisterCommand.Email,
             userRegisterCommand.Password);

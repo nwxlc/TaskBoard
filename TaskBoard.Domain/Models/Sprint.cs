@@ -6,9 +6,9 @@ public class Sprint
     {
         Id = id;
         StartDate = startDate;
-        Title = title;
-        Description = description;
-        Comment = comment;
+        SetTitle(title);
+        SetDescription(description);
+        SetComment(comment);
     }
 
     public Guid Id { get; set; }

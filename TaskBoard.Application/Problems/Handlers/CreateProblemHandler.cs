@@ -9,7 +9,7 @@ public class CreateProblemHandler : IRequestHandler<CreateProblemCommand, Guid>
 {
     private readonly IProblemRepository _problemRepository;
 
-    private CreateProblemHandler(IProblemRepository problemRepository)
+    public CreateProblemHandler(IProblemRepository problemRepository)
     {
         _problemRepository = problemRepository;
     }

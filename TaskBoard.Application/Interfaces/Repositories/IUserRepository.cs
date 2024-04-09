@@ -4,6 +4,6 @@ namespace TaskBoard.Application.Interfaces.Repositories;
 
 public interface IUserRepository
 {
-    Task<User?> TryGetByEmail(string email);
+    Task<User> TryGetByEmail(string email);
     Task Create(User user);
 }

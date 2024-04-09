@@ -19,9 +19,9 @@ public class UserRepository : IUserRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<User?> TryGetByEmail(string email)
+    public async Task<User> TryGetByEmail(string email)
     {
-        return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email)
-               ?? throw new Exception();
+        return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+        //   ?? throw new Exception();
     }
 }

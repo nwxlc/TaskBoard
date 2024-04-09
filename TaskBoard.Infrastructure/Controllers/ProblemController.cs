@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Application.Problems.Queries;
@@ -8,16 +7,18 @@ using TaskBoard.Infrastructure.Contracts.Problem;
 
 namespace TaskBoard.Infrastructure.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class ProblemController : Controller
 {
     private readonly IMediator _mediator;
-    
+
     public ProblemController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    [HttpGet]
+    [HttpGet("Search")]
     public async Task<ActionResult<ProblemResponse[]>> Search(string title, int page, int pageSize)
     {
         ArgumentException.ThrowIfNullOrEmpty(title);
@@ -25,7 +26,7 @@ public class ProblemController : Controller
         var searchProblem = new SearchProblemByTitleQuery()
         {
             Title = title,
-            Page = page, 
+            Page = page,
             PageSize = pageSize
         };
 
@@ -38,23 +39,23 @@ public class ProblemController : Controller
         return Ok(response);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<ProblemResponse>> Get(Guid guid)
+    [HttpGet("Get/{id:guid}")]
+    public async Task<ActionResult<ProblemResponse>> Get(Guid id)
     {
         var query = new GetProblemByIdQuery
         {
-            Id = guid
+            Id = id
         };
-        
+    
         var problem = await _mediator.Send(query);
-
+    
         var response = new ProblemResponse(problem.Id, problem.Title, problem.Description, problem.Comment);
-
+    
         return Ok(response);
     }
     
-    [HttpPost]
-    public async Task<ActionResult<Guid>> Create([FromBody]ProblemRequest problemRequest)
+    [HttpPost("Create")]
+    public async Task<ActionResult<Guid>> Create([FromBody] ProblemRequest problemRequest)
     {
         var problem = new CreateProblemCommand
         {
@@ -62,12 +63,12 @@ public class ProblemController : Controller
             Description = problemRequest.Description,
             Comment = problemRequest.Comment,
         };
-
+    
         var problemId = await _mediator.Send(problem);
         return Ok(new { Id = problemId });
     }
-
-    [HttpPut("{id:guid}")]
+    
+    [HttpPut("Update/{id:guid}")]
     public async Task<ActionResult<Guid>> Update(Guid id, ProblemRequest problemRequest)
     {
         var updateProblem = new UpdateProblemCommand
@@ -77,22 +78,22 @@ public class ProblemController : Controller
             Description = problemRequest.Description,
             Comment = problemRequest.Comment
         };
-        
+    
         var problemId = await _mediator.Send(updateProblem);
-
+    
         return Ok(problemId);
     }
-
-    [HttpDelete("{id:guid}")]
+    
+    [HttpDelete("Delete/{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var deleteProblem = new DeleteProblemCommand
         {
             Id = id
         };
-        
+    
         await _mediator.Send(deleteProblem.Id);
-        
+    
         return NoContent();
     }
 }
