@@ -7,7 +7,7 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[]
+
 public class UserController : Controller
 {
     private readonly IMediator _mediator;
