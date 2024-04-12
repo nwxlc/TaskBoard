@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Projects.Commands;
 using TaskBoard.Application.Projects.Queries;
@@ -8,6 +9,7 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "AdminProccess")]
 public class ProjectController : Controller
 {
      private readonly IMediator _mediator;

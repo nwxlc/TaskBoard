@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Sprints.Commands;
 using TaskBoard.Application.Sprints.Queries;
@@ -8,6 +9,7 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Roles = "ManagerAccess")]
 public class SprintController : Controller
 {
     private readonly IMediator _mediator;
