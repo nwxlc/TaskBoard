@@ -1,20 +1,23 @@
 using MediatR;
+using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Users.Commands;
 using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Application.Users.Handlers;
 
-public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, Guid>
+public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
 {
     private readonly IUserRepository _userRepository;
+    private readonly IJwtProvider _jwtProvider;
 
-    public UserRegisterHandler(IUserRepository userRepository)
+    public UserRegisterHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
     {
         _userRepository = userRepository;
+        _jwtProvider = jwtProvider;
     }
 
-    public async Task<Guid> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
+    public async Task<string> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(userRegisterCommand);
         
@@ -31,6 +34,9 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, Guid>
             userRegisterCommand.Password);
 
         await _userRepository.Create(registerUser);
-        return registerUser.Id;
+       
+        var token = _jwtProvider.GenerateToken(registerUser);
+        
+        return token;
     }
 }

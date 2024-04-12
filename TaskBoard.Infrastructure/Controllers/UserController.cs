@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Users.Commands;
 using TaskBoard.Infrastructure.Contracts.User;
@@ -7,7 +8,6 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-
 public class UserController : Controller
 {
     private readonly IMediator _mediator;
@@ -27,8 +27,8 @@ public class UserController : Controller
             Password = userRequest.Password
         };
     
-        var okString = await _mediator.Send(command);
-        return Ok("");
+        var token = await _mediator.Send(command);
+        return Ok(token);
     }
 
     [HttpPost("Login")]

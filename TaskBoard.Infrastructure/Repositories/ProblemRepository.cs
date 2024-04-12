@@ -58,15 +58,5 @@ public class ProblemRepository : IProblemRepository
         {
             throw new ArgumentException("Problem not found");
         }
-        
-        /*var problemToDelete = await _context.Problems.FirstOrDefaultAsync(x => x.Id == id);
-        if (problemToDelete != null)
-        {
-            _context.Problems.Remove(problemToDelete);
-            await _context.SaveChangesAsync();
-        }*/
-        
-        //упасть если нет объекта
-        //ExecuteDeleteAsync
     }
 }
