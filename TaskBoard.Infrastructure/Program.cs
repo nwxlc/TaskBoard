@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TaskBoard;
 using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Users.Handlers;
 using TaskBoard.Infrastructure;
 using TaskBoard.Infrastructure.Authentication;
+using TaskBoard.Infrastructure.Extensions;
 using TaskBoard.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,32 @@ var configuration = builder.Configuration;
 
 services.AddControllers();
 
-services.AddSwaggerGen();
+services.AddSwaggerGen(option =>
+{
+    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 services.AddEndpointsApiExplorer();
 services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(UserRegisterHandler).Assembly);
@@ -30,28 +57,18 @@ services.AddScoped<IProjectRepository, ProjectRepository>();
 services.AddScoped<ISprintRepository, SprintRepository>();
 services.AddScoped<IUserRepository, UserRepository>();
 
+services.AddApiAuthentication(configuration);
+
 services.AddScoped<IJwtProvider, JwtProvider>();
 
 var app = builder.Build();
 
-// if (app.Environment.IsDevelopment())
-// {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-// }
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseRouting();
 
-/*if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}*/
-
-// app.UseHttpsRedirection();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.UseEndpoints(routeBuilder => { routeBuilder.MapControllers(); });
