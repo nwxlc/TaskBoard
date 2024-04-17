@@ -8,12 +8,12 @@ namespace TaskBoard.Application.Users.Handlers;
 public class UserLoginHandler : IRequestHandler<UserLoginCommand, string>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IJwtProvider _jwtProvider;
+    private readonly ITokenGenerator _tokenGenerator;
 
-    public UserLoginHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
+    public UserLoginHandler(IUserRepository userRepository, ITokenGenerator tokenGenerator)
     {
         _userRepository = userRepository;
-        _jwtProvider = jwtProvider;
+        _tokenGenerator = tokenGenerator;
     }
 
     public async Task<string> Handle(UserLoginCommand userLoginCommand, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ public class UserLoginHandler : IRequestHandler<UserLoginCommand, string>
             throw new Exception("Failed to login");
         }
 
-        var token = _jwtProvider.GenerateToken(user);
+        var token = _tokenGenerator.GenerateToken(user);
 
         return token;
     }

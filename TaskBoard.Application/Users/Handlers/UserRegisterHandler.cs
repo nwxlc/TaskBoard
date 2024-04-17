@@ -9,12 +9,12 @@ namespace TaskBoard.Application.Users.Handlers;
 public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IJwtProvider _jwtProvider;
+    private readonly ITokenGenerator _tokenGenerator;
 
-    public UserRegisterHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
+    public UserRegisterHandler(IUserRepository userRepository, ITokenGenerator tokenGenerator)
     {
         _userRepository = userRepository;
-        _jwtProvider = jwtProvider;
+        _tokenGenerator = tokenGenerator;
     }
 
     public async Task<string> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
 
         await _userRepository.Create(registerUser);
        
-        var token = _jwtProvider.GenerateToken(registerUser);
+        var token = _tokenGenerator.GenerateToken(registerUser);
         
         return token;
     }
