@@ -18,6 +18,7 @@ public class UserController : Controller
     }
 
     [HttpPost("Registration")]
+    [AllowAnonymous]
     public async Task<IActionResult> Register(RegisterUserRequest userRequest)
     {
         var command = new UserRegisterCommand()
@@ -32,6 +33,7 @@ public class UserController : Controller
     }
 
     [HttpPost("Login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Login(LoginUserRequest userRequest)//, HttpContext context)
     {
         var command = new UserLoginCommand()

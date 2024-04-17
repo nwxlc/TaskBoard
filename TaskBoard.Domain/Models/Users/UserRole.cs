@@ -1,4 +1,4 @@
-namespace TaskBoard.Domain.Models;
+namespace TaskBoard.Domain.Models.Users;
 
 public class UserRole
 {
