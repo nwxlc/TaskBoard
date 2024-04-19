@@ -9,7 +9,7 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "AdminProccess")]
+[Authorize(Roles = "ProjectAccess")]
 public class ProjectController : Controller
 {
     private readonly IMediator _mediator;

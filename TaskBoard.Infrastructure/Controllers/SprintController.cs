@@ -9,7 +9,7 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "ManagerAccess")]
+[Authorize(Roles = "SprintAccess")]
 public class SprintController : Controller
 {
     private readonly IMediator _mediator;
