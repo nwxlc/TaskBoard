@@ -16,5 +16,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .UsingEntity<UserRole>(
                 l => l.HasOne<Role>().WithMany().HasForeignKey(r => r.RoleId),
                 r => r.HasOne<User>().WithMany().HasForeignKey(u => u.UserId));
+
+        builder
+            .Navigation(p => p.Roles)
+            .AutoInclude();
     }
 }

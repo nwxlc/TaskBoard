@@ -26,5 +26,9 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
             });
 
         builder.HasData(roles);
+
+        builder
+            .Navigation(r => r.Permissions)
+            .AutoInclude();
     }
 }
