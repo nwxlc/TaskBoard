@@ -18,7 +18,7 @@ public class User
 
     public string Email { get; set; }
     
-    public ICollection<Role> Roles { get; set; }
+    public ICollection<Role> Roles { get; set; } = new List<Role>();
     
     public static User Create(string userName, string email, string password)
     {
