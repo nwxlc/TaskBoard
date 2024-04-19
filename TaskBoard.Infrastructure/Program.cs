@@ -59,7 +59,7 @@ services.AddScoped<IUserRepository, UserRepository>();
 
 services.AddApiAuthentication(configuration);
 
-services.AddScoped<IJwtProvider, JwtProvider>();
+services.AddScoped<ITokenGenerator, TokenGenerator>();
 
 var app = builder.Build();
 
