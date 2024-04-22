@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TaskBoard.Application.Interfaces.Auth;
-using TaskBoard.Domain.Enums;
+using TaskBoard.Application.Users.Commands;
 using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Infrastructure.Authentication;
@@ -21,8 +21,7 @@ public class TokenGenerator : ITokenGenerator
     public string GenerateToken(User user)
     {
         Claim[] claims = user.Roles
-            // .SelectMany(x => x.Permissions, (_, permission) => new Claim(ClaimTypes.Role, permission.Name))
-            .SelectMany(x => x.Permissions, (_, permission) => new Claim("permission", permission.Name))
+            .SelectMany(x => x.Permissions, (_, permission) => new Claim(ClaimsIdentity.DefaultRoleClaimType, permission.Name))
             .Union(new[] { new Claim(CustomClaims.UserId, user.Id.ToString()) })
             .ToArray();
         

@@ -37,6 +37,8 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
        
         var token = _tokenGenerator.GenerateToken(registerUser);
         
+        
+        
         return token;
     }
 }
