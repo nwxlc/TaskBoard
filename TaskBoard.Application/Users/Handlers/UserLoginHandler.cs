@@ -25,6 +25,13 @@ public class UserLoginHandler : IRequestHandler<UserLoginCommand, string>
             throw new Exception("User not founded");
         }
 
+        var isBlocked = user.IsBlocked;
+
+        if (isBlocked)
+        {
+            throw new Exception("User is blocked");
+        }
+
         var result = user.Verify(userLoginCommand.Password, user.PasswordHash);
 
         if (result == false)
