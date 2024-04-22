@@ -18,6 +18,8 @@ public class User
 
     public string Email { get; set; }
     
+    public bool IsBlocked { get; set; }
+    
     public ICollection<Role> Roles { get; set; } = new List<Role>();
     
     public static User Create(string userName, string email, string password)
@@ -27,6 +29,11 @@ public class User
         var user = new User(Guid.NewGuid(), userName, email, passwordHash);
 
         return user;
+    }
+
+    public void Block()
+    {
+        IsBlocked = true;
     }
 
     private static string Generate(string password) =>
