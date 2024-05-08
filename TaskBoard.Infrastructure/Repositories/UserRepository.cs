@@ -21,7 +21,13 @@ public class UserRepository : IUserRepository
 
     public async Task<User> TryGetByEmail(string email)
     {
-        return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
-        //   ?? throw new Exception();
+        return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email)
+           ?? throw new Exception();
+    }
+
+    public async Task<User> TryGetById(Guid id)
+    {
+        return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id)
+               ?? throw new Exception();
     }
 }
