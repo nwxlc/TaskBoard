@@ -62,7 +62,8 @@ public class SprintController : Controller
          {
              Title = sprintRequest.Title,
              Description = sprintRequest.Description,
-             Comment = sprintRequest.Comment
+             Comment = sprintRequest.Comment,
+             ProjectId = sprintRequest.ProjectId
          };
 
          var sprintId = await _mediator.Send(sprint);
