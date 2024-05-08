@@ -45,7 +45,7 @@ public class ProjectRepository : IProjectRepository
     
     public async Task<Guid> Update(Project entity)
     {
-        _context.Update(entity);
+        _context.Projects.Update(entity);
         await _context.SaveChangesAsync();
         
         return entity.Id;

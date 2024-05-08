@@ -8,11 +8,11 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 {
     public void Configure(EntityTypeBuilder<Project> builder)
     {
-        builder.HasKey(a => a.Id);
+        builder.HasKey(project => project.Id);
 
         builder
-            .HasMany(a => a.Sprints)
-            .WithOne(a => a.Project)
-            .HasForeignKey(a => a.ProjectId);
+            .HasMany(project => project.Sprints)
+            .WithOne(sprint => sprint.Project)
+            .HasForeignKey(sprint => sprint.ProjectId);
     }
 }
