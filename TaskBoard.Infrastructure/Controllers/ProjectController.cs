@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Projects.Commands;
 using TaskBoard.Application.Projects.Queries;
+using TaskBoard.Application.Users.Commands;
 using TaskBoard.Infrastructure.Contracts.Project;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -94,5 +95,18 @@ public class ProjectController : Controller
         await _mediator.Send(deleteProject.Id);
 
         return NoContent();
+    }
+
+    public async Task<IActionResult> AddUser(Guid id, string email)
+    {
+        var addUser = new AddUserToProjectCommand()
+        {
+            ProjectId = id,
+            UserEmail = email
+        };
+
+        await _mediator.Send(addUser);
+
+        return Ok();
     }
 }
