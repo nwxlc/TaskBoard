@@ -20,7 +20,8 @@ public class CreateProblemHandler : IRequestHandler<CreateProblemCommand, Guid>
 
         var problem = Problem.Create(createProblemCommand.Title, 
             createProblemCommand.Description,
-            createProblemCommand.Comment);
+            createProblemCommand.Comment,
+            createProblemCommand.SprintId);
         
         await _problemRepository.Create(problem);
         return problem.Id;
