@@ -4,9 +4,10 @@ namespace TaskBoard.Domain.Models;
 
 public class Problem
 {
-    private Problem(Guid id, string title, string description, string comment, bool isComplete)
+    private Problem(Guid id, Guid sprintId, string title, string description, string comment, bool isComplete)
     {
         Id = id;
+        SprintId = sprintId;
         SetTitle(title);
         SetDescription(description);
         SetComment(comment);
@@ -29,9 +30,9 @@ public class Problem
 
     //public List<File> Files { get; set; }
     
-    public static Problem Create(string title, string description, string comment)
+    public static Problem Create(string title, string description, string comment, Guid sprintId)
     {
-        var problem = new Problem(Guid.NewGuid(), title, description, comment, false);
+        var problem = new Problem(Guid.NewGuid(), sprintId, title, description, comment, false);
 
         return problem;
     }
