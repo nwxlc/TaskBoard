@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Users.Commands;
 using TaskBoard.Application.Users.Queries;
-using TaskBoard.Infrastructure.Authentication;
 using TaskBoard.Infrastructure.Contracts.User;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -58,5 +57,16 @@ public class UserController : Controller
         var response = new AuthenticateResponse(user.Id, token);
         
         return Ok(response);
+    }
+
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Block(BlockUserRequest userRequest)
+    {
+        var query = new GetUserByIdQuery()
+        {
+            Id = userRequest.Id
+        };
+
+        var user = await _mediator.Send(query);
     }
 }
