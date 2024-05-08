@@ -20,7 +20,8 @@ public class CreateSprintHandler : IRequestHandler<CreateSprintCommand, Guid>
 
         var sprint = Sprint.Create(createSprintCommand.Title,
             createSprintCommand.Description,
-            createSprintCommand.Comment);
+            createSprintCommand.Comment,
+            createSprintCommand.ProjectId);
 
         await _sprintRepository.Create(sprint);
         return sprint.Id;
