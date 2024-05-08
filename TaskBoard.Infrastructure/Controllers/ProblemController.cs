@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Application.Problems.Queries;
-using TaskBoard.Contracts;
 using TaskBoard.Infrastructure.Contracts.Problem;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -64,6 +63,7 @@ public class ProblemController : Controller
             Title = problemRequest.Title,
             Description = problemRequest.Description,
             Comment = problemRequest.Comment,
+            SprintId = problemRequest.SprintId
         };
     
         var problemId = await _mediator.Send(problem);
