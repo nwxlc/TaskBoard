@@ -1,14 +1,17 @@
+using TaskBoard.Domain.Models.Users;
+
 namespace TaskBoard.Domain.Models;
 
 public class Sprint
 {
-    private Sprint(Guid id, DateTime startDate, string title, string description, string comment)
+    private Sprint(Guid id, DateTime startDate, string title, string description, string comment, Guid projectId)
     {
         Id = id;
         StartDate = startDate;
         SetTitle(title);
         SetDescription(description);
         SetComment(comment);
+        ProjectId = projectId;
     }
 
     public Guid Id { get; set; }
@@ -28,12 +31,14 @@ public class Sprint
     public string Comment { get; private set; }
     
     public List<Problem> Problems { get; set; }
+
+    public List<User> SprintUsers { get; set; }
     
     //public List<File> Files { get; set; }
     
-    public static Sprint Create(string title, string description, string comment)
+    public static Sprint Create(string title, string description, string comment, Guid projectId)
     {
-        var sprint = new Sprint(Guid.NewGuid(), DateTime.Now, title, description, comment);
+        var sprint = new Sprint(Guid.NewGuid(), DateTime.Now, title, description, comment, projectId);
 
         return sprint;
     }
@@ -59,5 +64,14 @@ public class Sprint
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(comment);
         Comment = comment;
+    }
+    
+    public void AddUser(User user)
+    {
+        if (user == null)
+        {
+            throw new Exception("Error");
+        }
+        SprintUsers.Add(user);
     }
 }

@@ -1,3 +1,5 @@
+using TaskBoard.Domain.Models.Users;
+
 namespace TaskBoard.Domain.Models;
 
 public class Project
@@ -16,6 +18,8 @@ public class Project
     public string Description { get; private set; }
 
     public List<Sprint> Sprints { get; set; }
+    
+    public List<User> ProjectUsers { get; set; }
 
     public static Project Create(string title, string description)
     {
@@ -34,5 +38,14 @@ public class Project
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(description);
         Description = description;
+    }
+
+    public void AddUser(User user)
+    {
+        if (user == null)
+        {
+            throw new Exception("Error");
+        }
+        ProjectUsers.Add(user);
     }
 }
