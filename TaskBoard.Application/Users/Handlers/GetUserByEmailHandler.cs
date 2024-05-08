@@ -5,11 +5,11 @@ using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Application.Users.Handlers;
 
-public class GetByEmailUserHandler : IRequestHandler<GetUserByEmailQuery, User>
+public class GetUserByEmailHandler : IRequestHandler<GetUserByEmailQuery, User>
 {
     private readonly IUserRepository _userRepository;
 
-    public GetByEmailUserHandler(IUserRepository userRepository)
+    public GetUserByEmailHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
