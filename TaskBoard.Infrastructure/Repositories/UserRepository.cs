@@ -30,4 +30,10 @@ public class UserRepository : IUserRepository
         return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id)
                ?? throw new Exception();
     }
+    
+    public async Task Update(User entity)
+    {
+        _context.Update(entity);
+        await _context.SaveChangesAsync();
+    }
 }

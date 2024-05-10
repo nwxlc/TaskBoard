@@ -7,4 +7,5 @@ public interface IUserRepository
     Task<User> TryGetById(Guid id);
     Task<User> TryGetByEmail(string email);
     Task Create(User user);
+    Task Update(User entity);
 }
