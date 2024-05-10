@@ -53,6 +53,8 @@ public class UserController : Controller
         };
 
         var user = await _mediator.Send(query);
+        
+        
 
         var response = new AuthenticateResponse(user.Id, token);
         
@@ -68,5 +70,7 @@ public class UserController : Controller
         };
 
         var user = await _mediator.Send(query);
+
+        return Ok();
     }
 }
