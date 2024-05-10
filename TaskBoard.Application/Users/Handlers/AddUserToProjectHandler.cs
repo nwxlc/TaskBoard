@@ -16,16 +16,16 @@ public class AddUserToProjectHandler : IRequestHandler<AddUserToProjectCommand, 
         _projectRepository = projectRepository;
     }
 
-    public async Task<Guid> Handle(AddUserToProjectCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(AddUserToProjectCommand addUserToProjectCommand, CancellationToken cancellationToken)
     {
-        var user = _userRepository.TryGetByEmail(request.UserEmail).Result;
+        var user = await _userRepository.TryGetByEmail(addUserToProjectCommand.UserEmail);
         
         if (user == null)
         {
             throw new Exception("User not founded");
         }
 
-        var project = _projectRepository.GetById(request.ProjectId).Result;
+        var project = await _projectRepository.GetById(addUserToProjectCommand.ProjectId);
 
         if (project == null)
         {
