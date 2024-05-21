@@ -21,6 +21,8 @@ public class User
     public bool IsBlocked { get; set; }
     
     public ICollection<Role> Roles { get; set; } = new List<Role>();
+
+    public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
     
     public static User Create(string userName, string email, string password)
     {
