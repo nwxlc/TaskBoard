@@ -10,7 +10,6 @@ namespace TaskBoard.Infrastructure.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "ProjectAccess")]
 public class ProjectController : Controller
 {
     private readonly IMediator _mediator;
@@ -21,6 +20,7 @@ public class ProjectController : Controller
     }
 
     [HttpGet("Search")]
+    [Authorize(Roles = "ReadProject")]
     public async Task<ActionResult<ProjectResponse[]>> Search(string title, int page, int pageSize)
     {
         ArgumentException.ThrowIfNullOrEmpty(title);
@@ -42,6 +42,7 @@ public class ProjectController : Controller
     }
 
     [HttpGet("Get/{id}")]
+    [Authorize(Roles = "ReadProject")]
     public async Task<ActionResult<ProjectResponse>> Get(Guid id)
     {
         var query = new GetProjectByIdQuery
@@ -57,6 +58,7 @@ public class ProjectController : Controller
     }
 
     [HttpPost("Create")]
+    [Authorize(Roles = "CreateProject")]
     public async Task<ActionResult<Guid>> Create([FromBody] ProjectRequest projectRequest)
     {
         var project = new CreateProjectCommand()
@@ -70,7 +72,8 @@ public class ProjectController : Controller
     }
 
     [HttpPut("Update/{id:guid}")]
-    public async Task<ActionResult<Guid>> Update(Guid id, [FromBody] ProjectRequest projectRequest)
+    [Authorize(Roles = "CreateProject")]
+    public async Task<ActionResult<Guid>> Update(Guid id, [FromBody]ProjectRequest projectRequest)
     {
         var updateProject = new UpdateProjectCommand()
         {
@@ -85,6 +88,7 @@ public class ProjectController : Controller
     }
 
     [HttpDelete("Delete/{id:guid}")]
+    [Authorize(Roles = "CreateProject")]
     public async Task<IActionResult> Delete(Guid id)
     {
         var deleteProject = new DeleteProjectCommand()
@@ -97,6 +101,7 @@ public class ProjectController : Controller
         return NoContent();
     }
 
+    [Authorize(Roles = "AddUserToProject")]
     public async Task<IActionResult> AddUser(Guid id, string email)
     {
         var addUser = new AddUserToProjectCommand()
