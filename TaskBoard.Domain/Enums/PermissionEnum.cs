@@ -2,7 +2,15 @@ namespace TaskBoard.Domain.Enums;
 
 public enum PermissionEnum
 {
-    ProjectAccess = 1,
-    SprintAccess = 2, 
-    ProblemAccess = 3
+    ReadProject = 1,
+    CreateProject = 2,
+    AddUserToProject = 3,
+    ReadSprint = 4,
+    CreateSprint = 5, 
+    AddUserToSprint = 6,
+    ReadProblem = 7,
+    CreateProblem = 8,
+    AddUserToProblem = 9,
+    
+    BlockUser = 10
 }
