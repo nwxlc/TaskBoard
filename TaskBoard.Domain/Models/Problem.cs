@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Domain.Models;
 
@@ -27,6 +28,8 @@ public class Problem
     public string Comment { get; private set; }
 
     public bool IsComplete { get; set; }
+    
+    public List<User> ProblemUsers { get; set; }
 
     //public List<File> Files { get; set; }
     
@@ -61,5 +64,14 @@ public class Problem
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(comment);
         Comment = comment;
+    }
+    
+    public void AddUser(User user)
+    {
+        if (user == null)
+        {
+            throw new Exception("Error");
+        }
+        ProblemUsers.Add(user);
     }
 }
