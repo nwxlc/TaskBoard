@@ -21,7 +21,10 @@ public class TokenGenerator : ITokenGenerator
     public string GenerateToken(User user)
     {
         Claim[] claims = user.Roles
-            .SelectMany(x => x.Permissions, (_, permission) => new Claim(ClaimsIdentity.DefaultRoleClaimType, permission.Name))
+            .SelectMany(x => x.Permissions, (_, permission) => permission.Name)
+            .Union(user.Permissions.Select(permission => permission.Name))
+            .Distinct()
+            .Select(permissionName => new Claim(ClaimsIdentity.DefaultRoleClaimType, permissionName))
             .Union(new[] { new Claim(CustomClaims.UserId, user.Id.ToString()) })
             .ToArray();
         
