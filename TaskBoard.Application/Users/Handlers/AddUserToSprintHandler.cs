@@ -44,7 +44,7 @@ public class AddUserToSprintHandler : IRequestHandler<AddUserToSprintCommand, Gu
 
         if (!project.ProjectUsers.Contains(user))
         {
-            throw new Exception("The user has not been added to the project");
+            throw new Exception("The user has not been added to the sprint");
         }
         
         sprint.AddUser(user);
