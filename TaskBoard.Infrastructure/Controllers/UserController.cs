@@ -29,9 +29,9 @@ public class UserController : Controller
             Email = userRequest.Email,
             Password = userRequest.Password
         };
-    
+
         var token = await _mediator.Send(command);
-        
+
         return Ok();
     }
 
@@ -53,11 +53,9 @@ public class UserController : Controller
         };
 
         var user = await _mediator.Send(query);
-        
-        
 
         var response = new AuthenticateResponse(user.Id, token);
-        
+
         return Ok(response);
     }
 
