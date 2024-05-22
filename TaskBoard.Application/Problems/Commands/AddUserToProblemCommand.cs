@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace TaskBoard.Application.Users.Commands;
+namespace TaskBoard.Application.Problems.Commands;
 
 public class AddUserToProblemCommand : IRequest<Guid>
 {

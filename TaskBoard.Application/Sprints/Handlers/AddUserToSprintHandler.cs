@@ -1,8 +1,8 @@
 using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
-using TaskBoard.Application.Users.Commands;
+using TaskBoard.Application.Sprints.Commands;
 
-namespace TaskBoard.Application.Users.Handlers;
+namespace TaskBoard.Application.Sprints.Handlers;
 
 public class AddUserToSprintHandler : IRequestHandler<AddUserToSprintCommand, Guid>
 {
@@ -21,21 +21,21 @@ public class AddUserToSprintHandler : IRequestHandler<AddUserToSprintCommand, Gu
 
     public async Task<Guid> Handle(AddUserToSprintCommand request, CancellationToken cancellationToken)
     {
-        var user = _userRepository.TryGetByEmail(request.UserEmail).Result;
+        var user = await _userRepository.TryGetByEmail(request.UserEmail);
         
         if (user == null)
         {
             throw new Exception("User not founded");
         }
         
-        var sprint = _sprintRepository.GetById(request.SprintId).Result;
+        var sprint = await _sprintRepository.GetById(request.SprintId);
 
         if (sprint == null)
         {
             throw new Exception("Sprint not founded");
         }
 
-        var project = _projectRepository.GetById(sprint.ProjectId).Result;
+        var project = await _projectRepository.GetById(sprint.ProjectId);
 
         if (project == null)
         {

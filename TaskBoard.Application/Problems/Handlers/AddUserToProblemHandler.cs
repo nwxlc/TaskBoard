@@ -1,8 +1,8 @@
 using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
-using TaskBoard.Application.Users.Commands;
+using TaskBoard.Application.Problems.Commands;
 
-namespace TaskBoard.Application.Users.Handlers;
+namespace TaskBoard.Application.Problems.Handlers;
 
 public class AddUserToProblemHandler : IRequestHandler<AddUserToProblemCommand, Guid>
 {

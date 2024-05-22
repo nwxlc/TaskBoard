@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace TaskBoard.Application.Users.Commands;
+namespace TaskBoard.Application.Sprints.Commands;
 
 public class AddUserToSprintCommand : IRequest<Guid>
 {

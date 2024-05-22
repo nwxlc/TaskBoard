@@ -1,8 +1,9 @@
 using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
+using TaskBoard.Application.Projects.Commands;
 using TaskBoard.Application.Users.Commands;
 
-namespace TaskBoard.Application.Users.Handlers;
+namespace TaskBoard.Application.Projects.Handlers;
 
 public class AddUserToProjectHandler : IRequestHandler<AddUserToProjectCommand, Guid>
 {

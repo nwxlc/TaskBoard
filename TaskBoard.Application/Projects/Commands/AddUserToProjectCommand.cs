@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace TaskBoard.Application.Users.Commands;
+namespace TaskBoard.Application.Projects.Commands;
 
 public class AddUserToProjectCommand : IRequest<Guid>
 {
