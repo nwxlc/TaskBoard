@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
-
 namespace TaskBoard.Infrastructure.Contracts.Sprint;
 
 public record SprintResponse(

@@ -4,7 +4,6 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TaskBoard.Application.Interfaces.Auth;
-using TaskBoard.Application.Users.Commands;
 using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Infrastructure.Authentication;

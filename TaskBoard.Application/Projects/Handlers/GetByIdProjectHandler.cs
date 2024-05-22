@@ -1,7 +1,6 @@
 using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Projects.Queries;
-using TaskBoard.Application.Sprints.Handlers;
 using TaskBoard.Domain.Models;
 
 namespace TaskBoard.Application.Projects.Handlers;

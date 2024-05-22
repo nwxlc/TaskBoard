@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Sprints.Commands;
 using TaskBoard.Application.Sprints.Queries;
 using TaskBoard.Application.Users.Commands;
-using TaskBoard.Domain.Models.Users;
 using TaskBoard.Infrastructure.Contracts.Sprint;
 
 namespace TaskBoard.Infrastructure.Controllers;

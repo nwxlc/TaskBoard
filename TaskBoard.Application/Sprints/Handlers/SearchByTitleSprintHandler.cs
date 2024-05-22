@@ -1,6 +1,5 @@
 using MediatR;
 using TaskBoard.Application.Interfaces.Repositories;
-using TaskBoard.Application.Projects.Queries;
 using TaskBoard.Application.Sprints.Queries;
 using TaskBoard.Domain.Models;
 
