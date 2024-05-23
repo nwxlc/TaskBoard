@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Problems.Commands;
 using TaskBoard.Application.Problems.Queries;
-using TaskBoard.Application.Users.Commands;
 using TaskBoard.Infrastructure.Contracts.Problem;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -49,17 +48,17 @@ public class ProblemController : Controller
         {
             Id = id
         };
-    
+
         var problem = await _mediator.Send(query);
-    
+
         var response = new ProblemResponse(problem.Id, problem.Title, problem.Description, problem.Comment);
-    
+
         return Ok(response);
     }
-    
+
     [HttpPost("Create")]
     [Authorize(Roles = "CreateProblem")]
-    public async Task<ActionResult<Guid>> Create([FromBody] ProblemRequest problemRequest)
+    public async Task<ActionResult<Guid>> Create([FromBody]ProblemRequest problemRequest)
     {
         var problem = new CreateProblemCommand
         {
@@ -68,11 +67,11 @@ public class ProblemController : Controller
             Comment = problemRequest.Comment,
             SprintId = problemRequest.SprintId
         };
-    
+
         var problemId = await _mediator.Send(problem);
         return Ok(new { Id = problemId });
     }
-    
+
     [HttpPut("Update/{id:guid}")]
     [Authorize(Roles = "CreateProblem")]
     public async Task<ActionResult<Guid>> Update(Guid id, ProblemRequest problemRequest)
@@ -84,12 +83,12 @@ public class ProblemController : Controller
             Description = problemRequest.Description,
             Comment = problemRequest.Comment
         };
-    
+
         var problemId = await _mediator.Send(updateProblem);
-    
+
         return Ok(problemId);
     }
-    
+
     [HttpDelete("Delete/{id:guid}")]
     [Authorize(Roles = "CreateProblem")]
     public async Task<IActionResult> Delete(Guid id)
@@ -98,12 +97,12 @@ public class ProblemController : Controller
         {
             Id = id
         };
-    
+
         await _mediator.Send(deleteProblem.Id);
-    
+
         return NoContent();
     }
-    
+
     [Authorize(Roles = "AddUserToProblem")]
     public async Task<IActionResult> AddUser(Guid id, string email)
     {

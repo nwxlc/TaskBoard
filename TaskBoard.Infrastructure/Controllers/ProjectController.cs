@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Projects.Commands;
 using TaskBoard.Application.Projects.Queries;
-using TaskBoard.Application.Users.Commands;
 using TaskBoard.Infrastructure.Contracts.Project;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -59,7 +58,7 @@ public class ProjectController : Controller
 
     [HttpPost("Create")]
     [Authorize(Roles = "CreateProject")]
-    public async Task<ActionResult<Guid>> Create([FromBody] ProjectRequest projectRequest)
+    public async Task<ActionResult<Guid>> Create([FromBody]ProjectRequest projectRequest)
     {
         var project = new CreateProjectCommand()
         {

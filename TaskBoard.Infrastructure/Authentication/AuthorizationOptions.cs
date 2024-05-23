@@ -1,5 +1,3 @@
-using TaskBoard.Domain.Models.Users;
-
 namespace TaskBoard.Infrastructure.Authentication;
 
 public class AuthorizationOptions

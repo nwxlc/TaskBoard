@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Sprints.Commands;
 using TaskBoard.Application.Sprints.Queries;
-using TaskBoard.Application.Users.Commands;
 using TaskBoard.Infrastructure.Contracts.Sprint;
 
 namespace TaskBoard.Infrastructure.Controllers;

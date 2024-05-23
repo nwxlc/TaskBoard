@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TaskBoard.Domain.Models;
 using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Infrastructure.Configurations;
@@ -12,7 +11,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(u => u.Id);
 
         builder.HasMany(u => u.Roles)
-            .WithMany(r => r.Users)
+            .WithMany()
             .UsingEntity<UserRole>(
                 l => l.HasOne<Role>().WithMany().HasForeignKey(r => r.RoleId),
                 r => r.HasOne<User>().WithMany().HasForeignKey(u => u.UserId));
