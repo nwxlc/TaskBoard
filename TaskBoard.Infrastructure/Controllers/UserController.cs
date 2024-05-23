@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +67,34 @@ public class UserController : Controller
         };
 
         var user = await _mediator.Send(query);
+
+        return Ok();
+    }
+
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AddRole(AddRoleRequest roleRequest)
+    {
+        var command = new AddRoleToUserCommand()
+        {
+            RoleId = roleRequest.RoleId,
+            UserId = roleRequest.UserId
+        };
+
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+    
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> AddPermission(AddPermissionRequest permissionRequest)
+    {
+        var command = new AddPermissionToUserCommand()
+        {
+            PermissionId = permissionRequest.PermissionId,
+            UserId = permissionRequest.UserId
+        };
+
+        await _mediator.Send(command);
 
         return Ok();
     }

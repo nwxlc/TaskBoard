@@ -43,4 +43,22 @@ public class User
 
     public bool Verify(string password, string hashedPassword) =>
         BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
+    
+    public void AddRole(Role role)
+    {
+        if (role == null)
+        {
+            throw new Exception("Error");
+        }
+        Roles.Add(role);
+    }
+    
+    public void AddPermission(Permission permission)
+    {
+        if (permission == null)
+        {
+            throw new Exception("Error");
+        }
+        Permissions.Add(permission);
+    }
 }
