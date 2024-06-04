@@ -61,10 +61,14 @@ services.AddApiAuthentication(configuration);
 
 services.AddScoped<ITokenGenerator, TokenGenerator>();
 
+builder.WebHost.UseWebRoot("StaticFiles");
+
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseStaticFiles();
 
 app.UseRouting();
 
