@@ -19,6 +19,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Project> Projects { get; set; }
+    
     public DbSet<Sprint> Sprints { get; set; }
 
     public DbSet<Problem> Problems { get; set; }
