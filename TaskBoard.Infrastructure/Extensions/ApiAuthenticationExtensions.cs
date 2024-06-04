@@ -1,11 +1,12 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using TaskBoard.Infrastructure.Authentication;
 
 namespace TaskBoard.Infrastructure.Extensions;
 
-public static class ApiExtensions
+public static class ApiAuthenticationExtensions
 {
     public static void AddApiAuthentication(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
@@ -40,6 +41,11 @@ public static class ApiExtensions
 
         serviceCollection.AddAuthentication();
 
-        serviceCollection.AddAuthorization();
+        serviceCollection.AddAuthorization(options =>
+        {
+            options.AddPolicy("AuthenticatedUsers", b => b.RequireAuthenticatedUser());
+        });
+        
+        
     }
 }

@@ -47,6 +47,11 @@ public class AddUserToProblemHandler : IRequestHandler<AddUserToProblemCommand, 
             throw new Exception("The user has not been added to the project");
         }
         
+        if (problem.ProblemUsers.Contains(user))
+        {
+            throw new Exception("User has already been added to problem");
+        }
+        
         problem.AddUser(user);
 
         return await _problemRepository.Update(problem);

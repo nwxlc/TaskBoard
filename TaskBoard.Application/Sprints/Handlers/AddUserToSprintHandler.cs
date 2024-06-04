@@ -46,6 +46,11 @@ public class AddUserToSprintHandler : IRequestHandler<AddUserToSprintCommand, Gu
         {
             throw new Exception("The user has not been added to the sprint");
         }
+
+        if (sprint.SprintUsers.Contains(user))
+        {
+            throw new Exception("User has already been added to sprint");
+        }
         
         sprint.AddUser(user);
 
