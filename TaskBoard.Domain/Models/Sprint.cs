@@ -34,7 +34,7 @@ public class Sprint
 
     public List<User> SprintUsers { get; set; }
     
-    //public List<File> Files { get; set; }
+    public List<File> Files { get; set; }
     
     public static Sprint Create(string title, string description, string comment, Guid projectId)
     {
@@ -73,5 +73,14 @@ public class Sprint
             throw new Exception("Error");
         }
         SprintUsers.Add(user);
+    }
+
+    public void AddFile(File file)
+    {
+        if (file == null)
+        {
+            throw new Exception("Error");
+        }
+        Files.Add(file);
     }
 }

@@ -118,4 +118,32 @@ public class SprintController : Controller
 
         return Ok();
     }
+
+    [Authorize]
+    public async Task<IActionResult> ReadFile(Guid id)
+    {
+        var path = Path.Combine();
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        var url = $"~/StaticFiles/Sprints/id";
+
+        return Redirect(url);
+    }
+
+    public async Task<IActionResult> AddFile(Guid fileId, Guid sprintId)
+    {
+        var command = new AddFileToSprintCommand()
+        {
+            FileId = fileId,
+            SprintId = sprintId
+        };
+
+        await _mediator.Send(command);
+
+        return Ok();
+    }
 }

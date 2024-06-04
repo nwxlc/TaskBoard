@@ -116,4 +116,17 @@ public class ProblemController : Controller
 
         return Ok();
     }
+    
+    public async Task<IActionResult> AddFile(Guid fileId, Guid problemId)
+    {
+        var command = new AddFileToProblemCommand()
+        {
+            FileId = fileId,
+            ProblemId = problemId
+        };
+
+        await _mediator.Send(command);
+
+        return Ok();
+    }
 }

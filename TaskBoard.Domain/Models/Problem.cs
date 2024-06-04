@@ -31,7 +31,7 @@ public class Problem
     
     public List<User> ProblemUsers { get; set; }
 
-    //public List<File> Files { get; set; }
+    public List<File> Files { get; set; }
     
     public static Problem Create(string title, string description, string comment, Guid sprintId)
     {
@@ -73,5 +73,14 @@ public class Problem
             throw new Exception("Error");
         }
         ProblemUsers.Add(user);
+    }
+    
+    public void AddFile(File file)
+    {
+        if (file == null)
+        {
+            throw new Exception("Error");
+        }
+        Files.Add(file);
     }
 }
