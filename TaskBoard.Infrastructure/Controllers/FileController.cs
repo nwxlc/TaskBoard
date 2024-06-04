@@ -37,6 +37,8 @@ public class FileController : Controller
         return Ok("File Uploaded Successfully!");
     }
     
+    [Route("/files/{fileName}")]
+    [Authorize]
     public async Task<IActionResult> GetFile(string fileName)
     {
         var filePath = GetOrCreateFilePath(fileName);
