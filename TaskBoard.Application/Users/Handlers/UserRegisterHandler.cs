@@ -11,7 +11,8 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
     private readonly IUserRepository _userRepository;
     private readonly ITokenGenerator _tokenGenerator;
 
-    public UserRegisterHandler(IUserRepository userRepository, ITokenGenerator tokenGenerator)
+    public UserRegisterHandler(IUserRepository userRepository, 
+        ITokenGenerator tokenGenerator)
     {
         _userRepository = userRepository;
         _tokenGenerator = tokenGenerator;
