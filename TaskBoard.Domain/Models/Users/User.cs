@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 namespace TaskBoard.Domain.Models.Users;
 
 public class User 
@@ -19,6 +21,8 @@ public class User
     public string Email { get; set; }
     
     public bool IsBlocked { get; set; }
+
+    public Guid? ResetPasswordToken { get; set; } 
     
     public ICollection<Role> Roles { get; set; } = new List<Role>();
 
@@ -38,7 +42,7 @@ public class User
         IsBlocked = true;
     }
 
-    private static string Generate(string password) =>
+    public static string Generate(string password) =>
         BCrypt.Net.BCrypt.EnhancedHashPassword(password);
 
     public bool Verify(string password, string hashedPassword) =>
