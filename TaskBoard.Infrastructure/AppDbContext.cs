@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using TaskBoard.Domain.Models;
 using TaskBoard.Domain.Models.Users;
 using TaskBoard.Infrastructure.Authentication;
+using TaskBoard.Infrastructure.Options;
 using File = TaskBoard.Domain.Models.File;
 
 namespace TaskBoard.Infrastructure;
@@ -31,6 +32,8 @@ public class AppDbContext : DbContext
     public DbSet<Permission> Permissions { get; set; }
 
     public DbSet<File> Files  { get; set; }
+
+    public DbSet<ConfirmToken> ConfirmTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
