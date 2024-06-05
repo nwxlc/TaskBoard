@@ -1,5 +1,4 @@
 using MediatR;
-using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Users.Commands;
 
@@ -8,13 +7,11 @@ namespace TaskBoard.Application.Users.Handlers;
 public class SendEmailHandler : IRequestHandler<SendEmailCommand, string>
 {
     private readonly IUserRepository _userRepository;
-    private readonly IConfirmTokenGenerator _tokenGenerator;
 
     public SendEmailHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
-
 
     public async Task<string> Handle(SendEmailCommand request, CancellationToken cancellationToken)
     {
@@ -32,8 +29,12 @@ public class SendEmailHandler : IRequestHandler<SendEmailCommand, string>
             throw new Exception("User is blocked");
         }
 
-        var token = _tokenGenerator.GenerateToken(user);
+        var token = Guid.NewGuid();
 
-        return token;
+        user.ResetPasswordToken = token;
+
+        await _userRepository.Update(user);
+        
+        return token.ToString();
     }
 }
