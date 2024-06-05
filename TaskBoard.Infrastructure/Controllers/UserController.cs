@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskBoard.Application.Users.Commands;
 using TaskBoard.Application.Users.Queries;
+using TaskBoard.Infrastructure.Authentication;
 using TaskBoard.Infrastructure.Contracts.User;
 
 namespace TaskBoard.Infrastructure.Controllers;
@@ -12,10 +13,13 @@ namespace TaskBoard.Infrastructure.Controllers;
 public class UserController : Controller
 {
     private readonly IMediator _mediator;
+    private readonly EmailSender _emailSender;
 
-    public UserController(IMediator mediator)
+    public UserController(IMediator mediator, 
+        EmailSender emailSender)
     {
         _mediator = mediator;
+        _emailSender = emailSender;
     }
 
     [HttpPost("Registration")]
@@ -97,5 +101,24 @@ public class UserController : Controller
         await _mediator.Send(command);
 
         return Ok();
+    }
+
+    public async Task SendEmail(EmailSendRequest request)
+    {
+        var command = new SendEmailCommand()
+        {
+            Email = request.Email
+        };
+
+        var token = await _mediator.Send(command);
+
+        var email = request.Email;
+
+        await _emailSender.SendEmailAsync(email, "Восстановление пароля", token);
+    }
+
+    public async Task ChangePassword(ChangePasswordRequest request)
+    {
+        var command = 
     }
 }
