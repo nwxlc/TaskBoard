@@ -7,7 +7,9 @@ using TaskBoard.Application.Users.Handlers;
 using TaskBoard.Infrastructure;
 using TaskBoard.Infrastructure.Authentication;
 using TaskBoard.Infrastructure.Extensions;
+using TaskBoard.Infrastructure.Options;
 using TaskBoard.Infrastructure.Repositories;
+using FileOptions = TaskBoard.Infrastructure.Options.FileOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -48,9 +50,11 @@ services.AddMediatR(cfg => {
 
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
+services.Configure<FileOptions>(configuration.GetSection(nameof(FileOptions)));
 
-configuration.Bind("Project", new Config());
-services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Config.ConnectionString));
+configuration.Bind("Project", new DatabaseOptions());
+services.AddDbContext<AppDbContext>(options => options.UseNpgsql(DatabaseOptions.ConnectionString));
+//services.AddOptions<FileOptions>().Bind(configuration.GetSection("FileOptions"));
 
 services.AddScoped<IProblemRepository, ProblemRepository>();
 services.AddScoped<IProjectRepository, ProjectRepository>();
