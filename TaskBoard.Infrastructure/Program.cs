@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using TaskBoard;
 using TaskBoard.Application.Interfaces.Auth;
 using TaskBoard.Application.Interfaces.Repositories;
 using TaskBoard.Application.Users.Handlers;
@@ -49,12 +48,10 @@ services.AddMediatR(cfg => {
 });
 
 services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
-services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
 services.Configure<FileOptions>(configuration.GetSection(nameof(FileOptions)));
 
 configuration.Bind("Project", new DatabaseOptions());
 services.AddDbContext<AppDbContext>(options => options.UseNpgsql(DatabaseOptions.ConnectionString));
-//services.AddOptions<FileOptions>().Bind(configuration.GetSection("FileOptions"));
 
 services.AddScoped<IProblemRepository, ProblemRepository>();
 services.AddScoped<IProjectRepository, ProjectRepository>();
