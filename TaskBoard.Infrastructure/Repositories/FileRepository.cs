@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using TaskBoard.Application.Interfaces.Repositories;
 using File = TaskBoard.Domain.Models.File;
 
 namespace TaskBoard.Infrastructure.Repositories;
 
-public class FileRepository
+public class FileRepository : IFileRepository
 {
     private readonly AppDbContext _context;
 
