@@ -117,8 +117,17 @@ public class UserController : Controller
         await _emailSender.SendEmailAsync(email, "Восстановление пароля", token);
     }
 
-    public async Task ChangePassword(ChangePasswordRequest request)
+    public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
     {
-        var command = 
+        var command = new ChangePasswordCommand()
+        {
+            Email = request.Email,
+            Password = request.Password,
+            Token = request.Token
+        };
+
+        await _mediator.Send(command);
+
+        return Ok();
     }
 }
