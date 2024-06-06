@@ -35,9 +35,7 @@ public class ChangePasswordHandler : IRequestHandler<ChangePasswordCommand, Guid
             throw new Exception("The entered token does not match");
         }
 
-        var passwordHash = User.Generate(request.Password);
-
-        user.PasswordHash = passwordHash;
+        user.ChangePassword(request.Password);
 
         await _userRepository.Update(user);
 
