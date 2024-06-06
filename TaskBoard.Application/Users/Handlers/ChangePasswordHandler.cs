@@ -30,12 +30,7 @@ public class ChangePasswordHandler : IRequestHandler<ChangePasswordCommand, Guid
             throw new Exception("User is blocked");
         }
 
-        if (user.ResetPasswordToken.ToString() != request.Token)
-        {
-            throw new Exception("The entered token does not match");
-        }
-
-        user.ChangePassword(request.Password);
+        user.ChangePassword(request.Password, request.Token);
 
         await _userRepository.Update(user);
 

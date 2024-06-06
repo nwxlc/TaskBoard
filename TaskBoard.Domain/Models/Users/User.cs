@@ -48,8 +48,13 @@ public class User
     public bool Verify(string password, string hashedPassword) =>
         BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
 
-    public void ChangePassword(string password)
+    public void ChangePassword(string password, string token)
     {
+        if (ResetPasswordToken.ToString() != token)
+        {
+            throw new Exception("The entered token does not match");
+        }
+        
         var passwordHash = Generate(password);
 
         PasswordHash = passwordHash;
