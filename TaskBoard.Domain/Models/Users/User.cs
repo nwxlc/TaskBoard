@@ -42,11 +42,20 @@ public class User
         IsBlocked = true;
     }
 
-    public static string Generate(string password) =>
+    private static string Generate(string password) =>
         BCrypt.Net.BCrypt.EnhancedHashPassword(password);
 
     public bool Verify(string password, string hashedPassword) =>
         BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
+
+    public void ChangePassword(string password)
+    {
+        var passwordHash = Generate(password);
+
+        PasswordHash = passwordHash;
+
+        ResetPasswordToken = null;
+    }
     
     public void AddRole(Role role)
     {
