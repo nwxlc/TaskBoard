@@ -24,9 +24,6 @@ public class AppDbContext : DbContext
     public DbSet<Permission> Permissions { get; set; }
 
     public DbSet<File> Files  { get; set; }
-
-    public DbSet<ConfirmToken> ConfirmTokens { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
