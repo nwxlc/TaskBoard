@@ -42,6 +42,11 @@ public class Project
 
     public void AddUser(User user)
     {
+        if (ProjectUsers.Contains(user))
+        {
+            throw new Exception("User has already been added to project");
+        }
+        
         if (user == null)
         {
             throw new Exception("Error");

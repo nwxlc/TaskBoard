@@ -18,7 +18,7 @@ public class ProjectController : Controller
         _mediator = mediator;
     }
 
-    [HttpGet("Search")]
+    [HttpGet()]
     [Authorize(Roles = "ReadProject")]
     public async Task<ActionResult<ProjectResponse[]>> Search(string title, int page, int pageSize)
     {
@@ -40,7 +40,7 @@ public class ProjectController : Controller
         return Ok(response);
     }
 
-    [HttpGet("Get/{id}")]
+    [HttpGet("/{id}")]
     [Authorize(Roles = "ReadProject")]
     public async Task<ActionResult<ProjectResponse>> Get(Guid id)
     {
@@ -56,7 +56,7 @@ public class ProjectController : Controller
         return Ok(response);
     }
 
-    [HttpPost("Create")]
+    [HttpPost]
     [Authorize(Roles = "CreateProject")]
     public async Task<ActionResult<Guid>> Create([FromBody]ProjectRequest projectRequest)
     {
@@ -70,7 +70,7 @@ public class ProjectController : Controller
         return Ok(new { Id = projectId });
     }
 
-    [HttpPut("Update/{id:guid}")]
+    [HttpPut("/{id:guid}")]
     [Authorize(Roles = "CreateProject")]
     public async Task<ActionResult<Guid>> Update(Guid id, [FromBody]ProjectRequest projectRequest)
     {
@@ -86,7 +86,7 @@ public class ProjectController : Controller
         return Ok(projectId);
     }
 
-    [HttpDelete("Delete/{id:guid}")]
+    [HttpDelete("/{id:guid}")]
     [Authorize(Roles = "CreateProject")]
     public async Task<IActionResult> Delete(Guid id)
     {

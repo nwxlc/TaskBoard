@@ -16,8 +16,6 @@ public class Problem
     }
 
     public Guid Id { get; set; }
-
-    public Sprint? Sprint { get; set; }
     
     public Guid SprintId { get; set; }
 
@@ -68,6 +66,11 @@ public class Problem
     
     public void AddUser(User user)
     {
+        if (ProblemUsers.Contains(user))
+        {
+            throw new Exception("User has already been added to sprint");
+        }
+        
         if (user == null)
         {
             throw new Exception("Error");
@@ -77,6 +80,11 @@ public class Problem
     
     public void AddFile(File file)
     {
+        if (Files.Contains(file))
+        {
+            throw new Exception("File has already been added to problem");
+        }
+        
         if (file == null)
         {
             throw new Exception("Error");

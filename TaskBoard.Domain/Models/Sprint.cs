@@ -16,8 +16,6 @@ public class Sprint
 
     public Guid Id { get; set; }
     
-    public Project Project { get; set; }
-    
     public Guid ProjectId { get; set; } 
     
     public DateTime StartDate { get; set; } 
@@ -68,6 +66,11 @@ public class Sprint
     
     public void AddUser(User user)
     {
+        if (SprintUsers.Contains(user))
+        {
+            throw new Exception("User has already been added to sprint");
+        }
+        
         if (user == null)
         {
             throw new Exception("Error");
@@ -77,6 +80,11 @@ public class Sprint
 
     public void AddFile(File file)
     {
+        if (Files.Contains(file))
+        {
+            throw new Exception("File has already been added to sprint");
+        }
+        
         if (file == null)
         {
             throw new Exception("Error");

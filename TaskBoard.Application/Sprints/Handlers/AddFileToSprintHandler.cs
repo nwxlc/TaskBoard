@@ -32,11 +32,6 @@ public class AddFileToSprintHandler : IRequestHandler<AddFileToSprintCommand, Gu
             throw new Exception("File not founded");
         }
         
-        if (sprint.Files.Contains(file))
-        {
-            throw new Exception("File has already been added to sprint");
-        }
-        
         sprint.AddFile(file);
 
         return await _sprintRepository.Update(sprint);
