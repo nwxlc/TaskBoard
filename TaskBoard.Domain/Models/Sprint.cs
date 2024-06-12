@@ -15,6 +15,8 @@ public class Sprint
     }
 
     public Guid Id { get; set; }
+
+    public Project Project { get; set; }
     
     public Guid ProjectId { get; set; } 
     

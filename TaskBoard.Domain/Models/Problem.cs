@@ -16,6 +16,8 @@ public class Problem
     }
 
     public Guid Id { get; set; }
+
+    public Sprint? Sprint { get; set; }
     
     public Guid SprintId { get; set; }
 
