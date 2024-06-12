@@ -5,7 +5,7 @@ using TaskBoard.Application.Users.Commands;
 
 namespace TaskBoard.Application.Users.Handlers;
 
-public class UserLoginHandler : IRequestHandler<UserLoginCommand, string>
+public class UserLoginHandler : IRequestHandler<UserLoginCommand, (Guid userId, string tokenResponse)>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenGenerator _tokenGenerator;
@@ -16,7 +16,7 @@ public class UserLoginHandler : IRequestHandler<UserLoginCommand, string>
         _tokenGenerator = tokenGenerator;
     }
 
-    public async Task<string> Handle(UserLoginCommand userLoginCommand, CancellationToken cancellationToken)
+    public async Task<(Guid userId, string tokenResponse)> Handle(UserLoginCommand userLoginCommand, CancellationToken cancellationToken)
     {
         var user = await _userRepository.TryGetByEmail(userLoginCommand.Email);
 
@@ -32,15 +32,17 @@ public class UserLoginHandler : IRequestHandler<UserLoginCommand, string>
             throw new Exception("User is blocked");
         }
 
-        var result = user.Verify(userLoginCommand.Password, user.PasswordHash);
+        var verifyResult = user.Verify(userLoginCommand.Password, user.PasswordHash);
 
-        if (result == false)
+        if (verifyResult == false)
         {
             throw new Exception("Failed to login");
         }
 
         var token = _tokenGenerator.GenerateToken(user);
 
-        return token;
+        var result = (userId: user.Id, tokenResponse: token);
+        
+        return result;
     }
 }

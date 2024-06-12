@@ -6,7 +6,7 @@ using TaskBoard.Domain.Models.Users;
 
 namespace TaskBoard.Application.Users.Handlers;
 
-public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
+public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, (Guid userId, string tokenResponse)>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenGenerator _tokenGenerator;
@@ -18,7 +18,7 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
         _tokenGenerator = tokenGenerator;
     }
 
-    public async Task<string> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
+    public async Task<(Guid userId, string tokenResponse)> Handle(UserRegisterCommand userRegisterCommand, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(userRegisterCommand);
         
@@ -37,7 +37,9 @@ public class UserRegisterHandler : IRequestHandler<UserRegisterCommand, string>
         await _userRepository.Create(registerUser);
        
         var token = _tokenGenerator.GenerateToken(registerUser);
+
+        var response = (userId: registerUser.Id, tokenResponse: token);
         
-        return token;
+        return response;
     }
 }

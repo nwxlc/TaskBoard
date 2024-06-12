@@ -33,9 +33,11 @@ public class UserController : Controller
             Password = userRequest.Password
         };
 
-        var token = await _mediator.Send(command);
+        var result = await _mediator.Send(command);
 
-        return Ok();
+        var response = new AuthenticateResponse(result.userId, result.tokenResponse);
+            
+        return Ok(response);
     }
 
     [HttpPost("Login")]
@@ -48,16 +50,9 @@ public class UserController : Controller
             Password = userRequest.Password
         };
 
-        var token = await _mediator.Send(command);
+        var result = await _mediator.Send(command);
 
-        var query = new GetUserByEmailQuery()
-        {
-            Email = userRequest.Email
-        };
-
-        var user = await _mediator.Send(query);
-
-        var response = new AuthenticateResponse(user.Id, token);
+        var response = new AuthenticateResponse(result.userId, result.tokenResponse);
 
         return Ok(response);
     }
@@ -65,12 +60,12 @@ public class UserController : Controller
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Block(BlockUserRequest userRequest)
     {
-        var query = new GetUserByIdQuery()
+        var command = new BlockUserCommand()
         {
             Id = userRequest.Id
         };
 
-        var user = await _mediator.Send(query);
+        await _mediator.Send(command);
 
         return Ok();
     }
